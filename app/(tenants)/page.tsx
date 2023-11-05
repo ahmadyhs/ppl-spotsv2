@@ -6,6 +6,7 @@ export default function Home() {
   return (
     <div className=" flex w-full flex-col bg-white items-center justify-between">
       <title>Spots</title>
+
       <Image className="scale-x-100"
         src="/TXT.png"
         width={1920}
