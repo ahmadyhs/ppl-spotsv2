@@ -1,24 +1,24 @@
-import './globals.css'
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import "./globals.css";
+import localFont from "next/font/local";
+import type { Metadata } from "next";
+import { Noto_Sans } from "next/font/google";
 
-const inter = Inter({ subsets: ['latin'] })
+const font = Noto_Sans({ subsets: ["latin"], weight: "400" });
+const fontLocal = localFont({ src: "../public/ProductSans-Regular.ttf" });
 
 export const metadata: Metadata = {
-  title: 'Spots',
-  description: 'Website layanan coworking space',
-}
+  title: "Spots",
+  description: "Website layanan coworking space",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="id">
-      <body className={inter.className}>
-        {children}
-      </body>
+      <body className={fontLocal.className}>{children}</body>
     </html>
-  )
+  );
 }
