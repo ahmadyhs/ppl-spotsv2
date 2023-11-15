@@ -22,7 +22,6 @@ const config: Config = {
       },
       colors: {
         darkblue: "#0f172a",
-        // "#17224D"
       },
     },
   },
