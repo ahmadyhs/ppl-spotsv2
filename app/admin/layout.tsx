@@ -1,17 +1,15 @@
-// import Navbar from '../components/Navbar'
+import AdminAside from "../components/AsideNav/AdminAside";
 
-export default function AdminLayout({
+export default function OwnerLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <main>
-      {/* <section className='absolute w-full items-center px-4 top-4 bg-transparent z-30'>
-        <Navbar />
-      </section> */}
+    <main className="grid grid-cols-8">
+      <AdminAside />
 
       {children}
     </main>
-  )
+  );
 }

@@ -1,17 +1,23 @@
-import Navbar from '../components/Navbar'
+import { Toaster } from "react-hot-toast";
+import Navbar from "../components/Navbar";
+import TopLoadingBar from "../components/TopLoadingBar";
 
 export default function TenantLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <main>
-      <section className='absolute w-full items-center px-4 top-4 bg-transparent z-30'>
+      <Toaster />
+      {/* <TopLoadingBar /> */}
+
+      <section className="bg-darkblue h-[73px]">
         <Navbar />
       </section>
 
+      {/* <div className="h-24" /> */}
       {children}
     </main>
-  )
+  );
 }

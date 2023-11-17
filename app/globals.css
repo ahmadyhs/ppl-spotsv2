@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* default element tag styling */
+button {
+  @apply rounded-lg text-center font-semibold;
+}
+
+hr {
+  @apply mx-auto mt-10 w-10/12 border-blue-950;
+}
+
+h1 {
+  @apply text-darkblue mt-6 py-8 pl-12 text-3xl font-bold;
+}
