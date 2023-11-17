@@ -47,34 +47,6 @@ export default function SignupForm() {
       }
     };
 
-    // function post() {
-    //   api
-    //     .post("/auth/register", {
-    //       data,
-    //     })
-    //     .then((response) => console.log("RES = ", response))
-    //     .catch((error) => console.log("ERR = ", error));
-    // }
-
-    // function post() {
-    //   fetch("https://api.spotscoworking.live/auth/register", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-type": "application/json; charset=UTF-8",
-    //     },
-    //     body: JSON.stringify(data),
-    //   })
-    //     .then((response) =>
-    //       //console.log("RES = ", response.text()
-    //       response.text(),
-    //     )
-    //     .then((result) => {
-    //       const r = JSON.parse(result);
-    //       console.log("RES = ", r);
-    //     })
-    //     .catch((error) => console.log("ERR = ", error));
-    // }
-
     post();
   }
 
