@@ -1,9 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef } from "react";
-import getSpaceByID, {
-  SpaceResultDetail,
-} from "@/app/lib/apiCalls/getSpaceByID";
+import { SpaceResultDetail } from "@/app/lib/apiCalls/getSpaceByID";
 import Image from "next/image";
 import Link from "next/link";
 import moneySplitter from "@/app/lib/moneySplitter";
@@ -51,11 +49,12 @@ export default function ClientDetailView({
             <div className="fixed top-0 z-30 flex h-screen justify-center bg-white bg-opacity-50">
               <div className="relative flex w-3/4 flex-wrap overflow-x-hidden overflow-y-scroll bg-white p-4">
                 <span
-                  className="sticky top-0 cursor-pointer"
+                  className="sticky top-0 cursor-pointer rounded-sm bg-red-500 text-white"
                   onClick={togglePictureContainer}
                 >
-                  <GoX size="2em" />
+                  <GoX size="1em" />
                 </span>
+
                 {space.coworking_space_images.map((picture: any) => {
                   return (
                     <Image
@@ -72,7 +71,7 @@ export default function ClientDetailView({
             </div>
           )}
 
-          <div className="grid rounded-xl py-2 md:grid-cols-3">
+          <div className="grid py-2 md:grid-cols-3">
             <div className="relative my-5 flex rounded-xl bg-black md:col-span-2 md:mx-10 md:ml-10 md:mr-2 ">
               <Image
                 alt="room"
@@ -91,8 +90,8 @@ export default function ClientDetailView({
             </div>
           </div>
 
-          <div className="grid rounded-xl py-2 md:grid-cols-3">
-            <div className="border-1 mb-3 mt-5 rounded-xl bg-gray-100 p-5 md:col-span-2 md:ml-10 md:mr-2">
+          <div className="grid py-2 md:grid-cols-3">
+            <div className="border-1 rounded-xl bg-gray-100 p-5 md:col-span-2 md:ml-10 md:mr-2">
               <div className="flex">
                 <p className="text-xl font-semibold">Tentang</p>
                 <p className="mx-2 text-xl font-semibold text-gray-600">
@@ -103,7 +102,7 @@ export default function ClientDetailView({
                 {space.description}
               </p>
             </div>
-            <div className="border-1 right mb-3 mt-5 rounded-xl bg-gray-100 p-5 md:col-span-1 md:ml-2 md:mr-10">
+            <div className="border-1 right rounded-xl bg-gray-100 p-5 md:col-span-1 md:ml-2 md:mr-10">
               <p className="text-xl font-bold">Harga</p>
               <p className="mt text-2xl font-bold text-cyan-500">
                 Rp {moneySplitter(space.price)}/Jam
@@ -111,8 +110,8 @@ export default function ClientDetailView({
             </div>
           </div>
 
-          <div className="m-auto grid rounded-xl py-2 md:grid-cols-3">
-            <div className="border-1 mb-3 mt-5 rounded-xl bg-gray-100 p-5 md:col-span-2 md:ml-10 md:mr-2">
+          <div className="grid py-2 md:grid-cols-3">
+            <div className="border-1 mb-3 rounded-xl bg-gray-100 p-5 md:col-span-2 md:ml-10 md:mr-2">
               <p className="mb-2 text-xl font-semibold">Fasilitas</p>
               <ul className="ml-10 list-disc font-medium text-gray-600">
                 <li>{space.capacity} Kursi</li>
@@ -134,7 +133,7 @@ export default function ClientDetailView({
               </div>
             </div>
 
-            <div className="border-1 right mb-3 mt-5 rounded-xl bg-gray-100 p-5 md:col-span-1 md:ml-2 md:mr-10">
+            <div className="border-1 right mb-3 rounded-xl bg-gray-100 p-5 md:col-span-1 md:ml-2 md:mr-10">
               <p className="mb-4 text-xl font-semibold">
                 Cek Waktu Kosong Tempat
               </p>
