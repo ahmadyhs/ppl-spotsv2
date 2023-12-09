@@ -32,7 +32,7 @@
   "devDependencies": {
     "@types/cookie": "^0.5.1",
     "@types/googlemaps": "^3.43.3",
-    "@types/jsonwebtoken": "^9.0.2",
+    "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^20.9.0",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.6"
