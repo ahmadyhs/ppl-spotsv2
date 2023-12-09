@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,6 +11,7 @@ const config: Config = {
     screens: {
       xs: "240px",
       sm: "480px",
+      stm: "540px",
       md: "768px",
       lg: "976px",
       xl: "1440px",
@@ -22,15 +24,24 @@ const config: Config = {
       },
       colors: {
         darkblue: "#0f172a",
+        darkgray: "#23272f",
+        lightblack: "#16181d",
       },
       animation: {
         slideup: "slideup 0.75s ease-in-out",
+        slideupfast: "slideupfast 0.5s",
         slideleft: "slideleft 1.25s ease-in-out",
         slideleftonly: "slideleftonly 5s ease-in",
+        slidedownfastout: "slidedownfastout 0.5s",
       },
       keyframes: {
         slideup: {
           "0%, 75%": { opacity: "0", transform: "translateY(0.5rem)" },
+
+          "100%": { opacity: "100", transform: "translateY(0rem)" },
+        },
+        slideupfast: {
+          "0%": { opacity: "0", transform: "translateY(10rem)" },
 
           "100%": { opacity: "100", transform: "translateY(0rem)" },
         },
@@ -41,6 +52,11 @@ const config: Config = {
         slideleftonly: {
           "0%": { width: "20px" },
           "100%": { width: "80%" },
+        },
+        slidedownfastout: {
+          "0%": { opacity: "100", transform: "translateY(0rem)" },
+
+          "100%": { opacity: "0", transform: "translateY(10rem)" },
         },
       },
     },
