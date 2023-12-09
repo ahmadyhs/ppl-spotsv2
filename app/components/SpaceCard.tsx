@@ -19,19 +19,19 @@ const SpaceCard: React.FC<SpaceResultProps> = ({
   image,
 }) => {
   return (
-    <div className="w-full px-12 py-5 md:w-1/2">
+    <div className="w-full px-6 py-5 md:w-1/2 md:px-12">
       <Link href={`/detail/${id}`}>
-        <div className="hover:border-darkblue overflow-hidden rounded-xl border-2 border-transparent bg-white drop-shadow-md transition duration-200 ease-in-out">
+        <div className="overflow-hidden rounded-xl border-2 border-transparent bg-white drop-shadow-md transition duration-200 ease-in-out hover:border-darkblue">
           <Image
             alt="foto ruangan"
-            src={"/office.png"}
+            src={image}
             className="aspect-video w-full object-cover"
             width={500}
             height={500}
           />
 
           <div className="mx-5 items-center py-2">
-            <p className="text-darkblue truncate px-2 py-3 text-xl font-extrabold">
+            <p className="truncate px-2 py-3 text-xl font-extrabold text-darkblue">
               {name}
             </p>
             <div className="flex items-center px-2">

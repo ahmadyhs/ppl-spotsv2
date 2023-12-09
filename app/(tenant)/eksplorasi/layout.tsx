@@ -1,4 +1,8 @@
+"use client";
+
 import SearchBar from "@/app/components/Form/Search";
+import { Suspense } from "react";
+import ExploreLoadingCard from "./loading";
 
 export default function ExploreLayout({
   children,
@@ -12,7 +16,10 @@ export default function ExploreLayout({
       <h1>Cari Workspace</h1>
 
       <SearchBar />
-      {children}
+
+      <div className="flex flex-wrap">
+        <Suspense fallback={<ExploreLoadingCard />}>{children}</Suspense>
+      </div>
     </>
   );
 }

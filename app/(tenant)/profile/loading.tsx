@@ -1,3 +1,5 @@
+"use client";
+
 export default function TenantProfileLoadingCard() {
   return (
     <div className="justtify-center my-10 block items-center bg-slate-300 py-20">

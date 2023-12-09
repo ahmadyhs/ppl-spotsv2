@@ -1,114 +1,152 @@
-import Image from "next/image";
+"use client";
 
-const AdminPenyewa = () => {
-  const fetched: boolean = true;
+import StatusBlockColor from "@/app/components/StatusBlockColor";
+import useApiSecured from "@/app/lib/hooks/useApiSecured";
+import { AxiosError } from "axios";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+
+export type Owner = {
+  owner_id: number;
+  user_id: number;
+  nik: string;
+  ktp_picture: string;
+  balance: string;
+  bank_name: string;
+  card_number: string;
+  status: string;
+  user: {
+    email: string;
+    first_name: string;
+    last_name: string;
+    phone_number: string;
+  };
+};
+
+export default function AdminPenyedia() {
+  const axiosSecured = useApiSecured();
+
+  const [isFetched, setIsFetched] = useState(false);
+  const [owners, setOwners] = useState<Owner[] | null>(null);
+
+  useEffect(() => {
+    async function getOwner() {
+      try {
+        const response = await axiosSecured("/lib/apiCalls/admin/getOwner");
+        setOwners(response.data.owners);
+        setIsFetched(true);
+      } catch (error) {
+        const err = error as AxiosError;
+        console.log("err admin ", err.response);
+      }
+    }
+    getOwner();
+  }, []);
+
+  async function approvePenyedia(owner_id: number, approval: boolean) {
+    const status = approval ? "APPROVED" : "REJECTED";
+
+    try {
+      await axiosSecured.put("/lib/apiCalls/admin/getOwner", {
+        id: owner_id,
+        status: status,
+      });
+      toast.success("Verifikasi berhasil");
+      setTimeout(() => location.reload(), 200);
+    } catch (error) {
+      toast.error("Verifikasi gagal");
+    }
+  }
 
   return (
     <section className="col-span-8 max-h-screen md:col-span-6">
       <title>Data Penyedia Tempat</title>
-      <div className="h-screen overflow-auto">
-        <div className="flex justify-center">
-          <p className="mb-5 mt-10 text-3xl font-semibold text-black">
-            DATA PENYEDIA
-          </p>
-        </div>
 
-        {fetched && (
-          <div className="mx-10 mb-4 rounded-xl border-2 border-dashed border-black p-4">
-            <div className="flex justify-center">
-              <div className="flex w-10/12 items-center justify-center text-xl text-black">
-                <p className="w-4/12">Nama Depan</p>
-                <div className="m-2 w-8/12 rounded-xl py-2 text-center">
-                  {/*  */}
-                </div>
-              </div>
-            </div>
+      <div className="flex justify-center">
+        <h1>DATA PENYEDIA TEMPAT</h1>
+      </div>
 
-            <div className="flex justify-center">
-              <div className="flex w-10/12 items-center justify-center text-xl text-black">
-                <p className="w-4/12">Nama Belakang</p>:
-                <div className="m-2 w-8/12 rounded-xl py-2 text-center">
-                  {/*  */}
-                </div>
-              </div>
-            </div>
+      <div className="h-[85vh] overflow-x-scroll px-8">
+        <table className="mx-auto h-fit overflow-x-scroll rounded-xl shadow-lg">
+          <thead className="flex h-1/6 w-full">
+            <tr className="flex w-full items-center rounded-tl-xl rounded-tr-xl bg-darkgray text-center">
+              <th className="w-10 p-2 font-medium text-white">Owner ID</th>
+              <th className="w-20 p-2 font-medium text-white">Nama Depan</th>
+              <th className="w-20 p-2 font-medium text-white">Nama Belakang</th>
+              <th className="w-40 p-2 font-medium text-white">Email</th>
+              <th className="w-32 p-2 font-medium text-white">Nomor Telepon</th>
+              <th className="w-20 p-2 font-medium text-white">Bank</th>
+              <th className="w-32 p-2 font-medium text-white">Nomor Kartu</th>
+              <th className="w-40 p-2 font-medium text-white">NIK</th>
+              <th className="w-56 p-2 font-medium text-white">KTP </th>
+              <th className="w-40 p-2 font-medium text-white">Status</th>
+              <th className="w-40 p-2 font-medium text-white">Edit Status</th>
+            </tr>
+          </thead>
 
-            <div className="flex justify-center">
-              <div className="flex w-10/12 items-center justify-center  text-xl text-black">
-                <p className="w-4/12">Email</p>:
-                <div className="m-2 w-8/12 rounded-xl py-2 text-center">
-                  {/*  */}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-center">
-              <div className="flex w-10/12 items-center justify-center text-xl text-black">
-                <p className="w-4/12">Nomor Telepon</p>:
-                <div className="m-2 w-8/12 rounded-xl py-2 text-center">
-                  {/*  */}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-center">
-              <div className="flex w-10/12 items-center justify-center text-xl text-black">
-                <p className="w-4/12">NIK</p>:
-                <div className="m-2 w-8/12 rounded-xl py-2 text-center">
-                  {/*  */}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-center">
-              <div className="flex w-10/12 items-center justify-center text-xl text-black">
-                <p className="w-4/12">Bank</p>:
-                <div className="m-2 w-8/12 rounded-xl py-2 text-center">
-                  {/*  */}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-center">
-              <div className="flex w-10/12 items-center justify-center text-xl text-black">
-                <p className="w-4/12">Nomor Kartu</p>:
-                <div className="m-2 w-8/12 rounded-xl py-2 text-center">
-                  {/*  */}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-center">
-              <div className="flex w-10/12 items-center justify-center text-xl text-black">
-                <p className="w-4/12">Balance</p>:
-                <div className="m-2 w-8/12 rounded-xl py-2 text-center">
-                  {/*  */}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-center">
-              <div className="flex w-10/12 items-center justify-center text-xl text-black">
-                <p className="w-4/12">KTP</p>:
-                <div className="m-2 flex w-8/12 justify-center rounded-xl py-2 text-center">
-                  {/*  */}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-center">
-              <div className="flex w-10/12 items-center justify-center text-xl text-black">
-                <p className="w-4/12">Status</p>:
-                <div className="m-2 w-8/12 rounded-xl py-2 text-center">
-                  {/*  */}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+          <tbody className="flex h-[70vh] w-full flex-col items-center overflow-y-auto rounded-bl-xl rounded-br-xl text-black">
+            {isFetched &&
+              owners &&
+              (owners.length !== 0 ? (
+                owners.map((o) => {
+                  return (
+                    <tr className="flex w-full items-center" key={o.owner_id}>
+                      <td className="w-10 p-2">{o.owner_id}</td>
+                      <td className="w-20 break-words p-2">
+                        {o.user.first_name}
+                      </td>
+                      <td className="w-20 break-words p-2">
+                        {o.user.last_name}
+                      </td>
+                      <td className="w-40 break-words p-2">{o.user.email}</td>
+                      <td className="w-32 break-words p-2">
+                        {o.user.phone_number}
+                      </td>
+                      <td className="w-20 break-words p-2">{o.bank_name}</td>
+                      <td className="w-32 break-words p-2">{o.card_number}</td>
+                      <td className="w-40 break-words p-2">{o.nik}</td>
+                      <td className="w-56 p-2">
+                        <Image
+                          alt={`ktp ${o.user.first_name} ${o.user.last_name}`}
+                          src={o.ktp_picture}
+                          width={200}
+                          height={200}
+                          style={{
+                            width: "auto",
+                            height: "100%",
+                          }}
+                          priority
+                          className="rounded-sm"
+                        />
+                      </td>
+                      <td className="w-40 p-2">
+                        {StatusBlockColor(
+                          o.status,
+                          "rounded-full px-6 py-3 text-center",
+                        )}
+                      </td>
+                      <td className="w-40 p-2">
+                        {StatusBlockColor(
+                          "ADMIN",
+                          "rounded-full px-6 py-3 text-center",
+                          o.owner_id,
+                          approvePenyedia,
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr className="flex w-full">
+                  <td className="grid w-full justify-center p-4">
+                    Data Kosong
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
       </div>
     </section>
   );
-};
-
-export default AdminPenyewa;
+}

@@ -1,88 +1,78 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-//import { usePathname, useRouter } from "next/navigation"
-//import { useCallback, useEffect, useState } from "react"
-//import { BiAlignRight } from 'react-icons/bi'
-//import { useMediaQuery } from "react-responsive"
+import AsideLayout from "./AsideLayout";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 export default function OwnerAside() {
+  const activeColor = "bg-blue-700 ";
+  const path = usePathname();
+
+  const menu1Condition = path.endsWith("/owner");
+  const menu2Condition = path.endsWith("/datadiri");
+  const menu3Condition = path.endsWith("/reservasi");
+  const menu4Condition = path.endsWith("/coworking-space");
+  const menu5Condition = path.endsWith("/tambah");
+
   return (
-    <aside className="col-span-8 block w-full place-content-between bg-[#17224D] md:col-span-2 md:grid md:h-screen">
-      {/* {!isNotPhone &&
-        <div className="md:flex block w-full bg-[#17224D] relative h-12">
-          <Image 
-            className="absolute top-3 left-3"
-            alt='logo' 
-            src="/SPOTS-white-icon.svg"  
-            width={25} height={25} />
-          <BiAlignRight 
-            className="absolute top-4 right-4 border-white border-2 scale-150 bg-[#17224D]"
-            onClick={toggleOpen}/>
-        </div>
-      } */}
+    <AsideLayout>
+      <p className="mx-5 mb-10 text-center text-3xl text-white">Owner</p>
 
-      {/* {(isOpen || isNotPhone) && */}
-      <>
-        <div className="md:col-span-2">
-          <div className="right flex flex-col items-center">
-            <div className="right mt-5 flex flex-col items-center">
-              <Image
-                alt="logo"
-                src="/spots-white-nobg.png"
-                width={200}
-                height={200}
-                priority
-              />
-            </div>
-          </div>
-          <p className="mx-5 mb-10 text-center text-3xl text-white">Owner</p>
+      <Link
+        className={
+          (menu1Condition ? activeColor : "hover:bg-slate-500 ") +
+          "block w-full p-2 text-left font-semibold text-white active:bg-blue-900"
+        }
+        as="/owner"
+        href="/owner"
+      >
+        | &nbsp; Datadiri
+      </Link>
 
-          <Link
-            className="my-1 block w-full bg-blue-500 p-3 text-left font-semibold text-white hover:bg-blue-600 active:bg-slate-500"
-            href="/owner"
-          >
-            Datadiri
-          </Link>
+      <Link
+        className={
+          (menu2Condition ? activeColor : "hover:bg-slate-500 ") +
+          "block w-full p-2 text-left font-semibold text-white active:bg-blue-900"
+        }
+        as="/owner/edit/datadiri"
+        href="/owner/edit/datadiri"
+      >
+        | &nbsp; Update Datadiri
+      </Link>
 
-          <Link
-            className="my-1 block w-full bg-blue-500 p-3 text-left font-semibold text-white hover:bg-blue-600 active:bg-slate-500"
-            href="/owner/edit/datadiri"
-          >
-            Update Datadiri
-          </Link>
+      <Link
+        className={
+          (menu3Condition ? activeColor : "hover:bg-slate-500 ") +
+          "block w-full p-2 text-left font-semibold text-white active:bg-blue-900"
+        }
+        as="/owner/transaksi"
+        href="/owner/transaksi"
+      >
+        | &nbsp; Transaksi Booking
+      </Link>
 
-          <Link
-            className="my-1 block w-full bg-blue-500 p-3 text-left font-semibold text-white hover:bg-blue-600 active:bg-slate-500"
-            href="/owner/transaksi"
-          >
-            Transaksi Booking
-          </Link>
+      <Link
+        className={
+          (menu4Condition ? activeColor : "hover:bg-slate-500 ") +
+          "block w-full p-2 text-left font-semibold text-white active:bg-blue-900"
+        }
+        as="/owner/coworking-space"
+        href="/owner/coworking-space"
+      >
+        | &nbsp; Coworking Space Saya
+      </Link>
 
-          <Link
-            className="my-1 block w-full bg-blue-500 p-3 text-left font-semibold text-white hover:bg-blue-600 active:bg-slate-500"
-            href="/owner/coworking-space"
-          >
-            Coworking Space Saya
-          </Link>
-
-          <Link
-            className="my-1 block w-full bg-blue-500 p-3 text-left font-semibold text-white hover:bg-blue-600 active:bg-slate-500"
-            href="/owner/coworking-space/tambah"
-          >
-            Tambah Coworking Space
-          </Link>
-        </div>
-
-        <div className="mb-10 mt-5 md:col-span-2">
-          <div className="flex flex-col items-center">
-            <button className="my-1 w-5/6 border border-white bg-transparent p-3 text-left text-white hover:bg-blue-600 active:bg-slate-500">
-              ← Keluar
-            </button>
-          </div>
-        </div>
-      </>
-    </aside>
+      <Link
+        className={
+          (menu5Condition ? activeColor : "hover:bg-slate-500 ") +
+          "block w-full p-2 text-left font-semibold text-white active:bg-blue-900"
+        }
+        as="/owner/coworking-space/tambah"
+        href="/owner/coworking-space/tambah"
+      >
+        | &nbsp; Tambah Space
+      </Link>
+    </AsideLayout>
   );
 }

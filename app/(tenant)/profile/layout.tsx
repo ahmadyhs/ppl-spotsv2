@@ -1,4 +1,4 @@
-import SearchBar from "@/app/components/Form/Search";
+"use client";
 
 export default function ExploreLayout({
   children,

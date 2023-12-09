@@ -8,21 +8,21 @@ export default function Home() {
     async function tes() {
       await axios.get("/lib/apiCalls/get");
     }
-    tes();
+    // tes();
   } catch (error) {}
 
   return (
-    <div className="">
+    <div className="absolute top-0">
       <title>Spots</title>
 
       {/* <TopLoadingBar /> */}
 
-      <div className="relative">
+      <div className="relative h-min bg-darkgray">
         <Image
-          className="scale-x-100"
-          src="/office.png"
-          width={1920}
-          height={658}
+          className="scale-x-100 "
+          src="/mainoffice.png"
+          width={1440}
+          height={810}
           alt="office"
           priority
         />
@@ -35,7 +35,7 @@ export default function Home() {
         </h1>
       </div>
 
-      <section className="bg-darkblue w-full border-b py-8">
+      <section className="w-full border-b bg-darkblue py-8">
         <div className="container mx-auto flex flex-wrap pb-12 pt-4">
           <h2 className="my-2 w-full text-center text-3xl font-bold leading-tight text-white md:text-5xl">
             Mengapa Harus Spots?
@@ -134,7 +134,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="h-auto scale-75 rounded-lg bg-neutral-400">
+            <div className="mx-auto h-auto w-fit scale-75 rounded-lg bg-neutral-400">
               <Image
                 className="rounded-lg shadow-lg transition ease-in-out hover:-translate-x-8 hover:-translate-y-8"
                 src="/hands.png"

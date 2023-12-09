@@ -1,8 +1,9 @@
 "use client";
 
-import ResetPasswordModal from "@/app/components/ResetPasswordModal";
+import ResetPasswordModal from "@/app/components/ForgotPasswordModal";
+import { useUserInfoContext } from "@/app/lib/context/UserInfoContextProvider";
 import api from "@/app/lib/apiCalls/api";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useCallback } from "react";
@@ -11,6 +12,7 @@ import toast from "react-hot-toast";
 export default function Login() {
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
+  const { setUserType } = useUserInfoContext();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,17 +23,35 @@ export default function Login() {
 
   async function submitLogin() {
     try {
-      await axios.post("/lib/user", {
+      const response = await axios.post("/lib/apiCalls/auth/login", {
         email: email,
         password: password,
       });
 
-      router.push("/");
+      const userType = response.data.userType;
+      let homeUrl = "/";
+
+      setUserType(userType);
+
+      switch (userType) {
+        case "TENANT":
+          break;
+        case "OWNER":
+          homeUrl = "/owner";
+          break;
+        case "ADMIN":
+          homeUrl = "/admin/penyewa";
+        default:
+          break;
+      }
+
+      toast.success("Login berhasil");
       setTimeout(() => {
-        toast.success("Login berhasil");
-      }, 250);
+        router.push(homeUrl);
+      }, 500);
     } catch (error) {
-      toast.error("Login gagal");
+      const err: any = error as AxiosError;
+      toast.error(err?.response?.data);
     }
   }
 
@@ -42,7 +62,7 @@ export default function Login() {
       {openModal && <ResetPasswordModal toggleModal={toggleModal} />}
 
       <form
-        onSubmit={(e: any) => {
+        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
           submitLogin();
         }}

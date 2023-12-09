@@ -1,20 +1,18 @@
-import { Suspense } from "react";
-import getAllSpace from "@/app/lib/apiCalls/getAllSpace";
+import getAllSpace, { CoworkingSpace } from "@/app/lib/apiCalls/getAllSpace";
 import SpaceCard from "@/app/components/SpaceCard";
-import ExploreLoadingCard from "./loading";
 
-export default function Explore() {
-  const spaceResult = getAllSpace();
+export default async function Explore({
+  searchParams,
+}: {
+  searchParams: { search: string | undefined };
+}) {
+  const keyWord = searchParams.search ? searchParams.search : null;
+  const [spaceResult, pagination] = await getAllSpace(keyWord);
 
   return (
-    <div className="flex flex-wrap">
-      {/* {spaceResult && (spaceResult.length === 0) && (keyWord !== '') &&
-        <p className='text-neutral-800 text-center text-xl mt-6'>
-          Tidak ada Coworking Space yang cocok dengan kata kunci
-        </p>} */}
-
-      <Suspense fallback={<ExploreLoadingCard />}>
-        {spaceResult &&
+    <>
+      {spaceResult ? (
+        spaceResult.length !== 0 ? (
           spaceResult.map((space: any) => {
             return (
               <SpaceCard
@@ -26,11 +24,17 @@ export default function Explore() {
                 image={space.coworking_space_images[0].image_url}
               />
             );
-          })}
-      </Suspense>
-
-      {/* {isFetchFailed && 
-      <div className='text-black text-center'>Server Unreachable</div>} */}
-    </div>
+          })
+        ) : (
+          <p className="m-8 w-full text-center text-lg text-black">
+            Tidak ada Coworking Space yang cocok dengan kata kunci
+          </p>
+        )
+      ) : (
+        <div className="m-8 w-full text-center text-lg text-black">
+          Server Unreachable!
+        </div>
+      )}
+    </>
   );
 }

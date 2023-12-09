@@ -7,18 +7,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import axios from "axios";
 
 export default function Signup() {
   const router = useRouter();
-  // try {
-  //   async function tes() {
-  //     await axios.get("/lib/apiCalls/get");
-  //   }
-  //   tes();
-  // } catch (error) {
-  //   console.log(error);
-  // }
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -54,7 +45,7 @@ export default function Signup() {
       } catch (error) {
         const err = error as AxiosError;
         //@ts-ignore
-        const message = err.response.data.message;
+        const message = err?.response?.data?.message ?? "Daftar gagal";
         toast.error(message);
       }
     };
@@ -149,7 +140,7 @@ export default function Signup() {
           </select>
         </div>
 
-        <hr />
+        <hr className="mt-4" />
 
         <div className="mx-10 mb-10 flex justify-between gap-x-10">
           <button
