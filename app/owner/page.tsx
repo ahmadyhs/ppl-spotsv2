@@ -2,9 +2,9 @@
 
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
-import useApiSecured from "../lib/hooks/useApiSecured";
 import Image from "next/image";
 import moneySplitter from "../lib/moneySplitter";
+import useApiSecured from "../lib/hooks/useApiSecured";
 import Link from "next/link";
 
 export type Owner = {
