@@ -1,11 +1,11 @@
 "use client";
 
-import api from "@/app/lib/apiCalls/api";
-import phoneNumberFormatCheck from "@/app/lib/phoneNumberParser";
-import { AxiosError } from "axios";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { AxiosError } from "axios";
+import api from "@/app/lib/apiCalls/api";
+import phoneNumberFormatCheck from "@/app/lib/phoneNumberParser";
+import Link from "next/link";
 import toast from "react-hot-toast";
 
 export default function Signup() {

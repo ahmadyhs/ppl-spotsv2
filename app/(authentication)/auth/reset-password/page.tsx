@@ -11,20 +11,26 @@ export default function Login() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
-
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  let passwordMatch = true;
+
+  if (password !== confirmPassword) {
+    passwordMatch = false;
+  } else passwordMatch = true;
+
   async function submitResetPassword() {
     try {
-      const response = await api.post("/lib/apiCalls/auth/login", {
+      const response = await api.post("/auth/reset-password", {
         resetToken: token,
         password: password,
         confirmPassword: confirmPassword,
       });
 
       if (response.status === 200) {
-        router.push("/login");
+        toast.success("Ganti password berhasil");
+        setTimeout(() => router.push("/login"), 500);
       }
       // setTimeout(() => {
       //   toast.success("Login berhasil");
@@ -42,11 +48,11 @@ export default function Login() {
       <form
         onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
-          // submitLogin();
+          submitResetPassword();
         }}
       >
         <input
-          type="text"
+          type="password"
           placeholder="Password Baru"
           className="mx-3 my-1 w-11/12 rounded-xl border border-gray-300 py-2 text-center"
           required
@@ -62,6 +68,8 @@ export default function Login() {
           value={confirmPassword}
           onChange={(e: any) => setConfirmPassword(e.target.value)}
         />
+
+        {!passwordMatch && <p className="text-red-400">Password tidak cocok</p>}
 
         <hr />
 

@@ -1,8 +1,8 @@
 "use client";
 
 import ResetPasswordModal from "@/app/components/ForgotPasswordModal";
-import { useUserInfoContext } from "@/app/lib/context/UserInfoContextProvider";
 import api from "@/app/lib/apiCalls/api";
+import { useUserInfoContext } from "@/app/lib/hooks/useUserInfoContext";
 import axios, { AxiosError } from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
