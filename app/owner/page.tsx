@@ -48,7 +48,7 @@ export default function OwnerCredential() {
     <section className="col-span-8 max-h-screen md:col-span-6">
       <title>Data Diri Anda</title>
       <div className="h-screen overflow-auto">
-        <h1 className="pl-0 text-center">DATA PENYEDIA</h1>
+        <h1 className="pl-0 text-center">Data Penyedia</h1>
 
         <div className="mx-10 mb-4 grid min-h-[70vh] grid-cols-12 gap-y-4 rounded-xl p-4 shadow-lg">
           {owner && (

@@ -34,7 +34,7 @@ export default function AsideLayout({
   }
 
   return (
-    <aside className="col-span-8 block w-full place-content-between bg-darkblue md:col-span-2 md:grid md:h-screen">
+    <aside className="col-span-8 block w-full place-content-between overflow-y-scroll bg-darkblue md:col-span-2 md:grid md:h-screen">
       {/* {!isNotPhone &&
         <div className="md:flex block w-full bg-[#17224D] relative h-12">
           <Image 

@@ -31,17 +31,17 @@ export default function AdminPenyewa() {
   }, []);
 
   return (
-    <section className="col-span-8 max-h-screen md:col-span-6">
+    <section className="table-section">
       <title>Data Penyewa</title>
 
-      <div className="flex justify-center">
-        <h1>DATA PENYEWA</h1>
-      </div>
+      <h1 className="table-h1">Data Penyewa</h1>
 
-      <table className="mx-auto mb-8 h-fit w-11/12 rounded-xl shadow-lg">
-        <thead className="flex h-1/6 w-full">
-          <tr className="flex w-full items-center rounded-tl-xl rounded-tr-xl bg-darkgray text-center">
-            <th className="w-1/12 p-2 font-medium text-white">Tenant ID</th>
+      <table className="table-container h-5/6 w-full">
+        <thead className="table-head">
+          <tr className="flex h-full w-full items-center rounded-tl-xl rounded-tr-xl bg-darkgray text-center">
+            <th className="w-1/12 flex-auto p-2 font-medium text-white">
+              Tenant ID
+            </th>
             <th className="w-2/12 p-2 font-medium text-white">Nama Depan</th>
             <th className="w-2/12 p-2 font-medium text-white">Nama Belakang</th>
             <th className="w-4/12 p-2 font-medium text-white">Email</th>
@@ -49,7 +49,7 @@ export default function AdminPenyewa() {
           </tr>
         </thead>
 
-        <tbody className="flex h-[70vh] w-full flex-col items-center overflow-y-auto rounded-bl-xl rounded-br-xl text-black">
+        <tbody className="table-body">
           {isFetched &&
             tenants &&
             (tenants.length !== 0 ? (

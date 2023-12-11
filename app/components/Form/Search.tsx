@@ -11,7 +11,7 @@ export default function SearchBar() {
   return (
     <>
       <form
-        className="relative mb-8 flex w-full flex-wrap px-6 sm:px-12"
+        className="relative flex w-full flex-wrap px-6 sm:px-12"
         onSubmit={(e: any) => {
           e.preventDefault();
           push(`/eksplorasi?search=${keyWord}`);
@@ -26,7 +26,7 @@ export default function SearchBar() {
         />
 
         <button
-          className="stm:mt-0 stm:w-36 stm:ml-12 mt-4 h-12 w-full rounded-full bg-darkblue px-6 py-2 font-medium text-white active:bg-green-500"
+          className="mt-4 h-12 w-full rounded-full bg-darkblue px-6 py-2 font-medium text-white active:bg-green-500 stm:ml-12 stm:mt-0 stm:w-36"
           type="submit"
         >
           Cari

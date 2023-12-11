@@ -40,9 +40,9 @@ export default function EditOwnerCredential() {
   }
 
   return (
-    <section className="col-span-8 max-h-screen bg-white md:col-span-6">
+    <section className="col-span-8 h-screen max-h-screen overflow-y-scroll px-4 pb-8 md:col-span-6">
       <title>Update Data Diri</title>
-      <h1 className="pl-0 text-center">DATA OWNER</h1>
+      <h1 className="pl-0 text-center">Perbarui Data Penyedia</h1>
 
       {/* <OwnerInfoForm /> */}
       <form

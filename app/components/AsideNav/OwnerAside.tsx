@@ -11,7 +11,7 @@ export default function OwnerAside() {
 
   const menu1Condition = path.endsWith("/owner");
   const menu2Condition = path.endsWith("/datadiri");
-  const menu3Condition = path.endsWith("/reservasi");
+  const menu3Condition = path.endsWith("/riwayat-booking");
   const menu4Condition = path.endsWith("/coworking-space");
   const menu5Condition = path.endsWith("/tambah");
 
@@ -22,7 +22,7 @@ export default function OwnerAside() {
       <Link
         className={
           (menu1Condition ? activeColor : "hover:bg-slate-500 ") +
-          "block w-full p-2 text-left font-semibold text-white active:bg-blue-900"
+          "block w-full p-2 text-left font-semibold text-white"
         }
         as="/owner"
         href="/owner"
@@ -33,7 +33,7 @@ export default function OwnerAside() {
       <Link
         className={
           (menu2Condition ? activeColor : "hover:bg-slate-500 ") +
-          "block w-full p-2 text-left font-semibold text-white active:bg-blue-900"
+          "block w-full p-2 text-left font-semibold text-white"
         }
         as="/owner/edit/datadiri"
         href="/owner/edit/datadiri"
@@ -44,18 +44,18 @@ export default function OwnerAside() {
       <Link
         className={
           (menu3Condition ? activeColor : "hover:bg-slate-500 ") +
-          "block w-full p-2 text-left font-semibold text-white active:bg-blue-900"
+          "block w-full p-2 text-left font-semibold text-white"
         }
-        as="/owner/transaksi"
-        href="/owner/transaksi"
+        as="/owner/riwayat-booking"
+        href="/owner/riwayat-booking"
       >
-        | &nbsp; Transaksi Booking
+        | &nbsp; Riwayat Booking
       </Link>
 
       <Link
         className={
           (menu4Condition ? activeColor : "hover:bg-slate-500 ") +
-          "block w-full p-2 text-left font-semibold text-white active:bg-blue-900"
+          "block w-full p-2 text-left font-semibold text-white"
         }
         as="/owner/coworking-space"
         href="/owner/coworking-space"
@@ -66,7 +66,7 @@ export default function OwnerAside() {
       <Link
         className={
           (menu5Condition ? activeColor : "hover:bg-slate-500 ") +
-          "block w-full p-2 text-left font-semibold text-white active:bg-blue-900"
+          "block w-full p-2 text-left font-semibold text-white"
         }
         as="/owner/coworking-space/tambah"
         href="/owner/coworking-space/tambah"

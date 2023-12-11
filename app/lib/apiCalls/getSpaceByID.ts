@@ -27,7 +27,14 @@ export interface SpaceResultDetail {
       description: string;
     };
   }[];
-  availabilities?: any[];
+  availabilities?: {
+    availability_id: number;
+    space_id: number;
+    date: string;
+    start_hour: number;
+    end_hour: number;
+    is_booked: boolean;
+  }[];
 }
 
 export default async function getSpaceByID(

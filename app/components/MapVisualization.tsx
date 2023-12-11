@@ -28,13 +28,17 @@ export default function MapVisualization({
     });
   }, []);
 
-  const toggleMapDrag = useCallback(() => {
-    setMapDrag((value) => !value);
-  }, []);
+  const toggleMapDrag = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      setMapDrag((value) => !value);
+    },
+    [],
+  );
 
   useEffect(() => {
     if (coordinatesFetcher) {
-      coordinatesFetcher(position);
+      coordinatesFetcher(position); // parent component fetch the marker position
     }
   }, [position]);
 
@@ -42,18 +46,19 @@ export default function MapVisualization({
     <div className={style}>
       <p className="mb-4 text-xl font-semibold">{label}</p>
 
-      <div className="h-[70vh]">
+      <div className="relative h-[70vh]">
         <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
           <Map center={{ lat, lng }} zoom={12} draggable={mapDrag}>
             <button
               className={
-                (mapDrag ? "bg-red-700 " : "bg-darkblue ") +
-                "absolute left-[10px] top-24 h-10 w-28 rounded-md font-medium text-white hover:bg-teal-700"
+                (mapDrag ? "bg-red-700 " : "bg-green-700 ") +
+                "absolute left-[10px] top-24 h-10 w-28 rounded-md font-medium text-white hover:bg-teal-400"
               }
               onClick={toggleMapDrag}
             >
               {mapDrag ? "Hentikan" : "Geser Peta"}
             </button>
+
             <Marker
               position={position}
               draggable={draggable}

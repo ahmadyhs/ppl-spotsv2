@@ -33,7 +33,6 @@ export async function POST(request: Request) {
   }
 
   const result: any = await payment();
-  console.log(result);
 
   return Response.json(result?.data, { status: result.status });
 }

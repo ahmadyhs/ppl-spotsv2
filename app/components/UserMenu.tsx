@@ -3,11 +3,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useCallback, useEffect } from "react";
-import { useUserInfoContext } from "../lib/context/UserInfoContextProvider";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { usePathname, useRouter } from "next/navigation";
 import useApiSecured from "../lib/hooks/useApiSecured";
+import { useUserInfoContext } from "../lib/hooks/useUserInfoContext";
 
 const UserMenu = () => {
   const { push } = useRouter();

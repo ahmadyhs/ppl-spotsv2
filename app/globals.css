@@ -21,6 +21,26 @@ h1 {
   height: calc(100vh - 73px);
 }
 
+.table-section {
+  @apply col-span-8 h-screen max-h-screen overflow-x-auto overflow-y-clip px-4 pb-8 md:col-span-6;
+}
+
+.table-h1 {
+  @apply mb-4 mt-0 grid h-1/6 items-center pl-0 text-center;
+}
+
+.table-container {
+  @apply mx-auto overflow-x-scroll rounded-xl shadow-lg;
+}
+
+.table-head {
+  @apply h-fit w-full;
+}
+
+.table-body {
+  @apply flex h-full w-full flex-col items-center overflow-y-scroll rounded-bl-xl rounded-br-xl text-black;
+}
+
 /* scrollbar */
 
 *::-webkit-scrollbar {
@@ -33,7 +53,7 @@ h1 {
 
 *::-webkit-scrollbar-thumb {
   background-color: rgba(98, 111, 128, 0.4);
-  border-radius: 10px;
+  border-radius: 8px;
   /* border: 3px solid rgba(31, 209, 253, 0.4); */
 }
 

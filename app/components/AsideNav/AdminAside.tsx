@@ -12,6 +12,7 @@ export default function AdminAside() {
   const menu1Condition = path.endsWith("/penyewa");
   const menu2Condition = path.endsWith("/penyedia");
   const menu3Condition = path.endsWith("/coworking-space");
+  const menu4Condition = path.endsWith("/riwayat-booking");
 
   return (
     <AsideLayout>
@@ -19,7 +20,7 @@ export default function AdminAside() {
       <Link
         className={
           (menu1Condition ? activeColor : "hover:bg-slate-500 ") +
-          "block w-full p-2 text-left font-semibold text-white active:bg-blue-900"
+          "block w-full p-2 text-left font-semibold text-white"
         }
         as="/admin/penyewa"
         href="/admin/penyewa"
@@ -30,7 +31,7 @@ export default function AdminAside() {
       <Link
         className={
           (menu2Condition ? activeColor : "hover:bg-slate-500 ") +
-          "block w-full p-2 text-left font-semibold text-white active:bg-blue-900"
+          "block w-full p-2 text-left font-semibold text-white"
         }
         as="/admin/penyedia"
         href="/admin/penyedia"
@@ -41,12 +42,23 @@ export default function AdminAside() {
       <Link
         className={
           (menu3Condition ? activeColor : "hover:bg-slate-500 ") +
-          "block w-full p-2 text-left font-semibold text-white active:bg-blue-900"
+          "block w-full p-2 text-left font-semibold text-white"
         }
         as="/admin/coworking-space"
         href="/admin/coworking-space"
       >
         | &nbsp; Data Coworking
+      </Link>
+
+      <Link
+        className={
+          (menu4Condition ? activeColor : "hover:bg-slate-500 ") +
+          "block w-full p-2 text-left font-semibold text-white"
+        }
+        as="/admin/riwayat-booking"
+        href="/admin/riwayat-booking"
+      >
+        | &nbsp; Data Booking
       </Link>
     </AsideLayout>
   );

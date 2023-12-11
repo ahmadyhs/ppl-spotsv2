@@ -2,8 +2,8 @@ import "./globals.css";
 import localFont from "next/font/local";
 import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
-import UserInfoProvider from "./lib/context/UserInfoContextProvider";
 import { Toaster } from "react-hot-toast";
+import UserInfoProvider from "./lib/hooks/useUserInfoContext";
 
 const fontRemote = Noto_Sans({ subsets: ["latin"], weight: "400" });
 const fontLocal = localFont({ src: "../public/ProductSans-Regular.ttf" });

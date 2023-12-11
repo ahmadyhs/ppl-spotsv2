@@ -26,12 +26,10 @@ export default function AdminCoworkingSpace() {
   }
 
   return (
-    <section className="col-span-8 max-h-screen md:col-span-6">
+    <section className="table-section">
       <title>Data Coworking Space</title>
 
-      <div className="h-1/12 flex justify-center">
-        <h1>DATA COWORKING SPACE</h1>
-      </div>
+      <h1 className="table-h1">Data Coworking Space</h1>
 
       <SpaceTable userType="ADMIN" editFunction={verifySpace} />
     </section>

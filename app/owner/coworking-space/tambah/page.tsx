@@ -8,7 +8,7 @@ export default function AddSpace() {
       <title>Tambah Coworking Space</title>
       <div className="block max-h-screen overflow-auto px-8">
         <div className="h-1/12 flex justify-center">
-          <h1>TAMBAH COWORKING SPACE</h1>
+          <h1>Tambah Coworking Space</h1>
         </div>
 
         <SpaceForm />

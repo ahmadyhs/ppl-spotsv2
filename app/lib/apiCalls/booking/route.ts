@@ -1,5 +1,4 @@
-import { serialize } from "cookie";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import { apiSecured } from "../api";
 

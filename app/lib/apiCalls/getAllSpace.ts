@@ -3,6 +3,16 @@ import api from "./api";
 
 export const revalidate = 60;
 
+export type Pagination = {
+  isFirstPage: boolean;
+  isLastPage: boolean;
+  currentPage: number;
+  previousPage: number | null;
+  nextPage: number | null;
+  pageCount: number;
+  totalCount: number;
+};
+
 export interface SpaceResult {
   id: number;
   name: string;
@@ -28,12 +38,15 @@ export interface CoworkingSpace {
   }[];
 }
 
-const getAllSpace = cache(async (keyWord: string | null) => {
-  const params = keyWord ? `?search=${keyWord}` : "";
-  const result = await api(`/coworking-spaces${params}`);
-  const [spaces, pagination] = result.data.coworkingSpaces;
+const getAllSpace = cache(
+  async ({ search, page }: { search?: string; page?: string }) => {
+    const params = search ? `?search=${search}` : page ? `?page=${page}` : "";
+    const result = await api(`/coworking-spaces${params}`);
+    const [spaces, pagination]: [CoworkingSpace[], Pagination] =
+      result.data.coworkingSpaces;
 
-  return [spaces, pagination] as const;
-});
+    return [spaces, pagination] as const;
+  },
+);
 
 export default getAllSpace;
