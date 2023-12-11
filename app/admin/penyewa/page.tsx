@@ -1,7 +1,7 @@
 "use client";
 
-import { ProfileType } from "@/app/lib/context/UserInfoContextProvider";
 import useApiSecured from "@/app/lib/hooks/useApiSecured";
+import { ProfileType } from "@/app/lib/hooks/useUserInfoContext";
 import { AxiosError } from "axios";
 import { useState, useEffect } from "react";
 
