@@ -15,7 +15,9 @@ export default function ExploreLayout({
 
       <h1>Cari Workspace</h1>
 
-      <SearchBar />
+      <div className="sticky top-16 z-20 bg-white/95 py-4">
+        <SearchBar />
+      </div>
 
       <div className="flex flex-wrap">
         <Suspense fallback={<ExploreLoadingCard />}>{children}</Suspense>

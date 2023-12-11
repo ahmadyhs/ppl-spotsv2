@@ -4,8 +4,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import useApiSecured from "@/app/lib/hooks/useApiSecured";
-import { useUserInfoContext } from "@/app/lib/context/UserInfoContextProvider";
 import { AxiosError } from "axios";
+import { useUserInfoContext } from "@/app/lib/hooks/useUserInfoContext";
 import Image from "next/image";
 
 export default function Profile() {

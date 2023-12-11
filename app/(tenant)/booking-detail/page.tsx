@@ -1,55 +1,72 @@
 "use client";
 
-import getSpaceByID from "@/app/lib/apiCalls/getSpaceByID";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import CalendarView from "@/app/components/CalendarView";
-import moneySplitter from "@/app/lib/moneySplitter";
-import useApiSecured from "@/app/lib/hooks/useApiSecured";
-import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
+import useApiSecured from "@/app/lib/hooks/useApiSecured";
+import moneySplitter from "@/app/lib/moneySplitter";
 import MainLoading from "@/app/components/MainLoading";
+import toast from "react-hot-toast";
 
-export default function BookingDetailCallback(id: number) {
+export type BookingDetail = {
+  booking_id: string;
+  space_id: number;
+  tenant_id: number;
+  date: string;
+  start_hour: number;
+  end_hour: number;
+  total_price: string;
+  created_at: string;
+  updated_at: string;
+  coworking_space: {
+    name: string;
+  };
+  payment?: {
+    payment_id: string;
+    method: string;
+    amount: string;
+    status: string;
+  };
+};
+
+export default function BookingDetailCallback() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  // if (
-  //   !searchParams.get("spaceId") ||
-  //   !searchParams.get("bookingId") ||
-  //   !searchParams.get("name") ||
-  //   !searchParams.get("date") ||
-  //   !searchParams.get("end") ||
-  //   !searchParams.get("start") ||
-  //   !searchParams.get("spacePrice")
-  // ) {
-  //   router.back();
-  // }
-  const [isFetched, setIstFetched] = useState(false);
-
+  if (
+    !searchParams.get("order_id")
+    // !searchParams.get("status_code") ||
+  ) {
+    router.back();
+  }
+  const id = searchParams.get("order_id");
   const axiosSecured = useApiSecured();
-  const paramsProps = {
-    spaceId: "",
-    bookingId: "",
-    spaceName: "",
-    date: "",
-    startHour: "0",
-    endHour: "0",
-    spacePrice: "0",
-  };
 
-  const bookingDuration =
-    parseInt(paramsProps.endHour) - parseInt(paramsProps.startHour);
-  const totalPrice = bookingDuration * parseInt(paramsProps.spacePrice);
-
-  const image = "/dummyoffice.jpeg";
+  const [bookingDetail, setBookingDetail] = useState<BookingDetail | null>(
+    null,
+  );
 
   useEffect(() => {
-    setTimeout(() => setIstFetched(true), 3000);
+    async function callbackDetail() {
+      try {
+        const response = await axiosSecured(
+          `/lib/apiCalls/booking/callback?id=${id}`,
+        );
+
+        if (response.status === 200) {
+          setBookingDetail(response.data.booking);
+        }
+      } catch (error) {
+        toast.error("Terjadi masalah saat konfirmasi booking");
+      }
+    }
+
+    callbackDetail();
+
     const script = document.createElement("script");
 
     script.src =
-      "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
+      "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js";
     script.async = true;
 
     document.body.appendChild(script);
@@ -59,22 +76,42 @@ export default function BookingDetailCallback(id: number) {
     };
   }, []);
 
-  async function download() {
-    // const a = document.createElement("a");
-    // const blob = new Blob(["TES DOWNLOAD"], {
-    //   type: "text/plain;charset=utf-8;",
-    // });
-    // const url = URL.createObjectURL(blob);
-    // a.setAttribute("href", url);
-    // a.setAttribute("download", "test.pdf");
-    // a.click();
+  function download() {
     const element = document.getElementById("receipt");
+    var opt = {
+      margin: [0.5, 0],
+      filename:
+        "Spots_Booking_" +
+        (bookingDetail?.coworking_space?.name ?? "") +
+        (bookingDetail?.booking_id ?? "") +
+        ".pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    };
 
     // @ts-ignore
-    html2pdf().from(element).save();
+    html2pdf().set(opt).from(element).save();
   }
 
-  if (!isFetched) return <MainLoading />;
+  if (!bookingDetail)
+    return (
+      <div className="justtify-center my-10 block items-center py-20">
+        <div className="mx-8 rounded-xl bg-white p-6 drop-shadow-md">
+          <div className="flex items-center justify-center">
+            <div className="m-2 h-36 w-36 rounded-2xl bg-slate-100"></div>
+          </div>
+
+          <div className="my-3 grid h-8 animate-pulse rounded-md bg-slate-200" />
+          <div className="my-3 grid h-8 w-1/3 animate-pulse rounded-md bg-slate-200" />
+          <div className="my-3 mb-12 grid h-8 w-2/3 animate-pulse rounded-md bg-slate-200" />
+
+          <div className="my-3 grid h-8 animate-pulse rounded-md bg-slate-200" />
+          <div className="my-3 grid h-8 w-2/5 animate-pulse rounded-md bg-slate-200" />
+          <div className="my-3 grid h-8 w-1/3 animate-pulse rounded-md bg-slate-200" />
+        </div>
+      </div>
+    );
 
   return (
     <>
@@ -82,9 +119,10 @@ export default function BookingDetailCallback(id: number) {
 
       <h1>Detail Booking</h1>
 
-      <p className="text-l bg-white pb-8 pl-12 text-black">
-        Teliti kembali sebelum lanjut ke pembayaran
-      </p>
+      <strong className="text-l block bg-white px-6 pb-8 text-red-500 md:px-12">
+        *simpan struk bila diperlukan, struk tidak dapat di akses lagi setelah
+        meninggalkan laman ini
+      </strong>
 
       <form
         className="m-auto mb-5"
@@ -95,178 +133,205 @@ export default function BookingDetailCallback(id: number) {
       >
         <div
           id="receipt"
-          className="m-auto grid w-11/12 items-center rounded-xl border-2 border-dashed border-black py-5 lg:grid-cols-2"
+          className="m-auto grid w-11/12 items-center rounded-xl border-2 border-dashed border-black py-5"
         >
           <Image
             src={"/spots-white.svg"}
-            width={200}
-            height={200}
+            width={150}
+            height={150}
             alt="Spots-logo"
-            className="col-span-2 mx-auto bg-darkblue"
+            className="mx-auto bg-darkblue"
           />
 
-          <h2 className="col-span-2 my-6 text-center text-2xl font-bold text-darkblue">
+          <h2 className="my-6 text-center text-2xl font-bold text-darkblue">
             Struk Booking
           </h2>
+
           <div className="px-10">
-            <div className="my-3 flex justify-between">
-              <p className="w-2/6 text-lg font-semibold text-black">
+            <div className="my-3 flex">
+              <p className="w-5/12 text-sm font-semibold text-black sm:w-4/12 md:md:text-lg">
                 Nomor Booking
               </p>
-              <p className="w-1/6 text-center text-lg font-semibold text-black">
+              <p className="w-1/12 text-center font-semibold text-black md:text-lg">
                 :
               </p>
-              <p id="" className="w-3/6 text-lg font-semibold text-black">
-                {paramsProps.spaceName}
+              <p
+                id=""
+                className="w-6/12 font-semibold text-black sm:w-7/12 md:md:text-lg"
+              >
+                {bookingDetail.booking_id}
               </p>
             </div>
 
-            <div className="my-3 flex justify-between">
-              <p className="w-2/6 text-lg font-semibold text-black">
+            <div className="my-3 flex">
+              <p className="w-5/12 text-sm font-semibold text-black sm:w-4/12 md:md:text-lg">
                 Nama Coworking Space
               </p>
-              <p className="w-1/6 text-center text-lg font-semibold text-black">
+              <p className="w-1/12 text-center font-semibold text-black md:text-lg">
                 :
               </p>
-              <p id="" className="w-3/6 text-lg font-semibold text-black">
-                {paramsProps.spaceName}
+              <p
+                id=""
+                className="w-6/12 font-semibold text-black sm:w-7/12 md:text-lg"
+              >
+                {bookingDetail.coworking_space.name}
               </p>
             </div>
 
-            <div className="my-3 flex justify-between">
-              <p className="w-2/6 text-lg font-semibold text-black ">Tanggal</p>
-              <p className="w-1/6 text-center text-lg font-semibold text-black">
+            <div className="my-3 flex">
+              <p className="w-5/12 text-sm font-semibold text-black sm:w-4/12 md:text-lg ">
+                Tanggal
+              </p>
+              <p className="w-1/12 text-center font-semibold text-black md:text-lg">
                 :
               </p>
-              <p id="" className="w-3/6 text-lg font-semibold text-black">
-                {paramsProps.date}
+              <p
+                id=""
+                className="w-6/12 font-semibold text-black sm:w-7/12 md:text-lg"
+              >
+                {bookingDetail.date.replace(bookingDetail.date, (match) => {
+                  const date = new Date(match);
+                  return date.toDateString();
+                })}
               </p>
             </div>
 
-            <div className="my-3 flex justify-between">
-              <p className="w-2/6 text-lg font-semibold text-black">
+            <div className="my-3 flex">
+              <p className="w-5/12 text-sm font-semibold text-black sm:w-4/12 md:text-lg">
                 Waktu Sewa
               </p>
-              <p className="w-1/6 text-center text-lg font-semibold text-black">
+              <p className="w-1/12 text-center font-semibold text-black md:text-lg">
                 :
               </p>
-              <p id="" className="w-3/6 text-lg font-semibold text-black">
-                {paramsProps.startHour}:00 - {paramsProps.endHour}:00
+              <p
+                id=""
+                className="w-6/12 font-semibold text-black sm:w-7/12 md:text-lg"
+              >
+                {bookingDetail.start_hour}:00 - {bookingDetail.end_hour}:00
               </p>
             </div>
 
-            <div className="my-3 flex justify-between">
-              <p className="w-2/6 text-lg font-semibold text-black">
+            <div className="my-3 flex">
+              <p className="w-5/12 text-sm font-semibold text-black sm:w-4/12 md:text-lg">
                 Dibuat Pada
               </p>
-              <p className="w-1/6 text-center text-lg font-semibold text-black">
+              <p className="w-1/12 text-center font-semibold text-black md:text-lg">
                 :
               </p>
-              <p id="" className="w-3/6 text-lg font-semibold text-black">
-                {bookingDuration} Jam
+              <p
+                id=""
+                className="w-6/12 font-semibold text-black sm:w-7/12 md:text-lg"
+              >
+                {bookingDetail.created_at.replace(
+                  bookingDetail.created_at,
+                  (match) => {
+                    const time = new Date(match);
+                    return time.toLocaleString();
+                  },
+                )}
               </p>
             </div>
 
-            <div className="my-3 flex justify-between">
-              <p className="w-2/6 text-lg font-semibold text-black">
+            <div className="my-3 flex">
+              <p className="w-5/12 text-sm font-semibold text-black sm:w-4/12 md:text-lg">
                 Biaya Sewa
               </p>
-              <p className="w-1/6 text-center text-lg font-semibold text-black">
+              <p className="w-1/12 text-center font-semibold text-black md:text-lg">
                 :
               </p>
-              <p id="" className="w-3/6 text-lg font-semibold text-black">
-                Rp {moneySplitter(paramsProps.spacePrice)}
+              <p
+                id=""
+                className="w-6/12 font-semibold text-black sm:w-7/12 md:text-lg"
+              >
+                Rp {moneySplitter(bookingDetail.total_price)}
               </p>
             </div>
-
-            <hr />
           </div>
 
+          <hr className="my-6" />
+
           <div className="px-10">
-            <div className="my-8 flex justify-between">
-              <p className="w-2/6 text-lg font-semibold text-black">
+            <div className="my-3 flex">
+              <p className="w-5/12 text-sm font-semibold text-black sm:w-4/12 md:text-lg">
                 Nomor Pembayaran
               </p>
-              <p className="w-1/6 text-center text-lg font-semibold text-black">
+              <p className="w-1/12 text-center font-semibold text-black md:text-lg">
                 :
               </p>
-              <p id="" className="w-3/6 text-lg font-semibold text-black">
-                {}
+              <p
+                id=""
+                className="w-6/12 font-semibold text-black sm:w-7/12 md:text-lg"
+              >
+                {bookingDetail?.payment?.payment_id ?? "-"}
               </p>
             </div>
 
-            <div className="my-8 flex justify-between">
-              <p className="w-2/6 text-lg font-semibold text-black">
+            <div className="my-3 flex">
+              <p className="w-5/12 text-sm font-semibold text-black sm:w-4/12 md:text-lg">
                 Metode Pembayaran
               </p>
-              <p className="w-1/6 text-center text-lg font-semibold text-black">
+              <p className="w-1/12 text-center font-semibold text-black md:text-lg">
                 :
               </p>
-              <p id="" className="w-3/6 text-lg font-semibold text-black">
-                {}
+              <p
+                id=""
+                className="w-6/12 font-semibold text-black sm:w-7/12 md:text-lg"
+              >
+                {bookingDetail?.payment?.method ?? "-"}
               </p>
             </div>
 
-            <div className="my-8 flex justify-between">
-              <p className="w-2/6 text-lg font-semibold text-black">
+            <div className="my-3 flex">
+              <p className="w-5/12 text-sm font-semibold text-black sm:w-4/12 md:text-lg">
                 Status Pembayaran
               </p>
-              <p className="w-1/6 text-center text-lg font-semibold text-black">
+              <p className="w-1/12 text-center font-semibold text-black md:text-lg">
                 :
               </p>
-              <p id="" className="w-3/6 text-lg font-semibold text-black">
-                {}
+              <p
+                id=""
+                className="w-6/12 font-semibold text-black sm:w-7/12 md:text-lg"
+              >
+                {bookingDetail?.payment?.status ?? "-"}
               </p>
             </div>
 
-            <div className="my-8 flex justify-between">
-              <p className="w-2/6 text-lg font-semibold text-black">
+            <div className="my-3 flex">
+              <p className="w-5/12 text-sm font-semibold text-black sm:w-4/12 md:text-lg">
                 Total Pembayaran
               </p>
-              <p className="w-1/6 text-center text-lg font-semibold text-black">
+              <p className="w-1/12 text-center font-semibold text-black md:text-lg">
                 :
               </p>
-              <p id="" className="w-3/6 text-lg font-semibold text-black">
-                Rp {moneySplitter(totalPrice.toString())}
+              <p
+                id=""
+                className="w-6/12 font-semibold text-black sm:w-7/12 md:text-lg"
+              >
+                Rp {moneySplitter(bookingDetail?.payment?.amount ?? "-")}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="first-line: flex items-center">
+        <div className="grid items-center justify-center md:flex md:gap-x-28">
           <button
             type="submit"
-            className="m-auto mt-10 block rounded-full bg-darkblue px-20
+            className="mt-10 block w-48 rounded-full bg-darkblue
             py-3 text-center font-semibold text-white hover:bg-teal-700"
           >
-            Bayar
+            Download
           </button>
 
           <Link
             type="submit"
-            className="m-auto mt-10 block rounded-full bg-gray-200 px-20
+            className="mt-10 block w-48 rounded-full bg-gray-200
             py-3 text-center font-semibold hover:bg-blue-400"
-            href="/eksplorasi"
+            href="/riwayat-booking"
           >
-            Batal
+            Riwayat Booking
           </Link>
         </div>
       </form>
-
-      <a
-        id="tes"
-        href="http://localhost:8080/booking-detail"
-        download="tes.text"
-        className="w-full bg-black"
-      >
-        TES
-      </a>
-
-      <iframe
-        src="https://ahmadyhs.github.io/#about"
-        width="600"
-        height="200"
-      />
     </>
   );
 }

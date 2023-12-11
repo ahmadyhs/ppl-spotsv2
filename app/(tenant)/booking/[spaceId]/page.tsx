@@ -1,10 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import CalendarView from "@/app/components/CalendarView";
 import useApiSecured from "@/app/lib/hooks/useApiSecured";
 import toast from "react-hot-toast";
+import {
+  Availabilities,
+  useSpaceIdInfoContext,
+} from "@/app/lib/hooks/useSpaceIdInfo";
+import getSpaceByID from "@/app/lib/apiCalls/getSpaceByID";
+import { remapAvailabilities } from "../../detail/[spaceId]/ClientView";
 
 export default function Booking({ params }: { params: { spaceId: number } }) {
   const axiosSecured = useApiSecured();
@@ -13,6 +19,11 @@ export default function Booking({ params }: { params: { spaceId: number } }) {
   const name = searchParams.get("name");
   const price = searchParams.get("price");
   if (!name || !price) router.back();
+
+  const { schedule } = useSpaceIdInfoContext();
+  const [backupSchedule, setBackupSchedule] = useState<Availabilities | null>(
+    null,
+  );
 
   const time = new Date();
   const today = time.toJSON().slice(0, 10);
@@ -38,7 +49,7 @@ export default function Booking({ params }: { params: { spaceId: number } }) {
 
       const bookingDetail = response.data.data.booking;
 
-      const path = `/transaksi?bookingId=${bookingDetail.booking_id}&date=${bookingDetail.date}&start=${bookingDetail.start_hour}&end=${bookingDetail.end_hour}&name=${name}&spacePrice=${bookingDetail.total_price}&spaceId=${params.spaceId}`;
+      const path = `/transaksi?bookingId=${bookingDetail.booking_id}&date=${bookingDetail.date}&start=${bookingDetail.start_hour}&end=${bookingDetail.end_hour}&name=${name}&spacePrice=${price}&spaceId=${params.spaceId}`;
 
       if (response.status === 200) {
         toast.success("Booking berhasil dikirim");
@@ -46,6 +57,17 @@ export default function Booking({ params }: { params: { spaceId: number } }) {
       }
     } catch (error) {}
   }
+
+  useEffect(() => {
+    async function getBackupPicture() {
+      const response = await getSpaceByID(params.spaceId);
+      const availabilitesArray = response.availabilities?.map((value) => {
+        return remapAvailabilities(value);
+      });
+      setBackupSchedule(availabilitesArray ?? []);
+    }
+    if (!schedule) getBackupPicture();
+  }, []);
 
   return (
     <>
@@ -129,7 +151,7 @@ export default function Booking({ params }: { params: { spaceId: number } }) {
         </div>
 
         <div className="right flex flex-col items-center">
-          <div className="mt-10 rounded-full px-10 md:pr-10">
+          <div className="mt-10 flex w-full justify-center rounded-full px-10 md:pr-10">
             {/* {space && (
             <Image
               alt="room"
@@ -139,14 +161,19 @@ export default function Booking({ params }: { params: { spaceId: number } }) {
               height={500}
             />
           )} */}
-            <div className="grid justify-center">
-              <CalendarView />
-            </div>
+            {schedule || backupSchedule ? (
+              <CalendarView bookedScheduleProps={schedule ?? backupSchedule} />
+            ) : (
+              <div className="m-4 h-64 w-48 rounded-xl bg-white drop-shadow-md md:m-10 md:w-80">
+                <div className="h-12 w-full animate-none rounded-t-xl bg-darkblue" />
+                <div className="mx-auto my-4 h-2/3 w-5/6 animate-pulse rounded bg-slate-100" />
+              </div>
+            )}
           </div>
           <button
             type="submit"
-            className="m-auto mt-10 block rounded-full bg-darkblue px-20
-              py-3 text-center font-semibold text-white hover:bg-teal-700"
+            className="m-auto mt-10 block rounded-full bg-darkblue px-10 py-3
+              text-center font-semibold text-white hover:bg-teal-700 md:px-20"
           >
             Submit Booking
           </button>

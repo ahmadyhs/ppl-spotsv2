@@ -4,13 +4,6 @@ import axios from "axios";
 import TopLoadingBar from "../components/TopLoadingBar";
 
 export default function Home() {
-  try {
-    async function tes() {
-      await axios.get("/lib/apiCalls/get");
-    }
-    // tes();
-  } catch (error) {}
-
   return (
     <div className="absolute top-0">
       <title>Spots</title>
@@ -120,8 +113,8 @@ export default function Home() {
       </section>
 
       <section className="dark:bg-white-800 bg-gray-200">
-        <div className="mx-auto max-w-screen-xl space-y-12 px-4 py-8 lg:space-y-20">
-          <div className="items-center gap-8 lg:grid lg:grid-cols-2 xl:gap-16">
+        <div className="mx-auto max-w-screen-xl px-4 py-8">
+          <div className="flex flex-col items-center lg:grid lg:grid-cols-2">
             <div className="ml-10 text-gray-500 dark:text-gray-400 sm:text-lg">
               <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-blue-400 ">
                 Cari Coworking Space Sesuai Kebutuhanmu!
@@ -136,7 +129,7 @@ export default function Home() {
 
             <div className="mx-auto h-auto w-fit scale-75 rounded-lg bg-neutral-400">
               <Image
-                className="rounded-lg shadow-lg transition ease-in-out hover:-translate-x-8 hover:-translate-y-8"
+                className="rounded-lg shadow-lg transition ease-in-out hover:-translate-x-4 hover:-translate-y-4"
                 src="/hands.png"
                 width={770}
                 height={1024}

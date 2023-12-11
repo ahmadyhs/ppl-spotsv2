@@ -5,16 +5,16 @@ import { useState, useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
 import TopLoadingBar from "../components/TopLoadingBar";
 import { usePathname } from "next/navigation";
-import { useUserInfoContext } from "../lib/context/UserInfoContextProvider";
 import useApiSecured from "../lib/hooks/useApiSecured";
 import MainLoading from "../components/MainLoading";
+import SpaceIdInfoProvider from "../lib/hooks/useSpaceIdInfo";
+import { useUserInfoContext } from "../lib/hooks/useUserInfoContext";
 
 export default function TenantLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // const path = usePathname();
   const axiosSecured = useApiSecured();
 
   const [checkLogin, setCheckLogin] = useState(false);
@@ -47,7 +47,7 @@ export default function TenantLayout({
         <Navbar />
       </section>
 
-      {children}
+      <SpaceIdInfoProvider>{children}</SpaceIdInfoProvider>
     </main>
   );
 }

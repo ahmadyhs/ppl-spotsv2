@@ -10,13 +10,40 @@ import MapVisualization from "@/app/components/MapVisualization";
 import { HiMiniMapPin } from "react-icons/hi2";
 import { GoX } from "react-icons/go";
 import { useRouter } from "next/navigation";
-import { useUserInfoContext } from "@/app/lib/context/UserInfoContextProvider";
 import toast from "react-hot-toast";
+import { useSpaceIdInfoContext } from "@/app/lib/hooks/useSpaceIdInfo";
+import { useUserInfoContext } from "@/app/lib/hooks/useUserInfoContext";
+
+export function remapAvailabilities(value: {
+  availability_id: number;
+  space_id: number;
+  date: string;
+  start_hour: number;
+  end_hour: number;
+  is_booked: boolean;
+}) {
+  return {
+    start: `${value.date}T${
+      value.start_hour.toString().length === 1
+        ? "0" + value.start_hour
+        : value.start_hour
+    }:00:00`,
+    end: `${value.date}T${
+      value.end_hour.toString().length === 1
+        ? "0" + value.end_hour
+        : value.end_hour
+    }:00:00`,
+  };
+}
 
 export default function ClientDetailView(space: SpaceResultDetail) {
   const isDataFetched = true;
   const { push } = useRouter();
   const { profile } = useUserInfoContext();
+  const { setImage, setSchedule } = useSpaceIdInfoContext();
+  const availabilityArray = space.availabilities?.map((value) => {
+    return remapAvailabilities(value);
+  });
 
   const [hideScroll, sethideScroll] = useState(false);
   const [showPictureContainer, setShowPictureContainer] = useState(false);
@@ -30,6 +57,8 @@ export default function ClientDetailView(space: SpaceResultDetail) {
     if (!profile) {
       toast.error("Login dahulu");
     } else {
+      setSchedule(availabilityArray ?? []);
+      setImage(space.coworking_space_images[0].image_url);
       push(
         `/booking/${space.location.location_id}?name=${space.name}&price=${space.price}`,
       );
@@ -84,9 +113,9 @@ export default function ClientDetailView(space: SpaceResultDetail) {
             </div>
           )}
 
-          <div className="grid py-2 md:grid-cols-3">
-            <div className="grid gap-y-4 md:col-span-2">
-              <div className="relative mt-5 flex md:mx-10 md:ml-10 md:mr-2 md:rounded-xl ">
+          <div className="grid py-2 lg:grid-cols-3">
+            <div className="grid gap-y-4 lg:col-span-2">
+              <div className="relative mt-5 flex md:mx-10 md:rounded-xl lg:ml-10 lg:mr-2 ">
                 <Image
                   alt="room"
                   src={space.coworking_space_images[0].image_url}
@@ -104,7 +133,7 @@ export default function ClientDetailView(space: SpaceResultDetail) {
                 )}
               </div>
 
-              <div className="border-1 bg-gray-100 p-5 md:ml-10 md:mr-2 md:rounded-xl">
+              <div className="border-1 bg-gray-100 p-5 md:mx-10 md:rounded-xl lg:ml-10 lg:mr-2">
                 <div className="flex">
                   <p className="text-xl font-semibold">Tentang</p>
                   <p className="mx-2 text-xl font-semibold text-gray-600">
@@ -116,7 +145,7 @@ export default function ClientDetailView(space: SpaceResultDetail) {
                 </p>
               </div>
 
-              <div className="border-1 bg-gray-100 p-5 md:ml-10 md:mr-2 md:rounded-xl">
+              <div className="border-1 bg-gray-100 p-5 md:mx-10 md:rounded-xl lg:ml-10 lg:mr-2">
                 <p className="mb-2 text-xl font-semibold">Fasilitas</p>
                 <ul className="ml-10 list-disc font-medium text-gray-600">
                   <li>{space.capacity} Kursi</li>
@@ -139,28 +168,32 @@ export default function ClientDetailView(space: SpaceResultDetail) {
               </div>
             </div>
 
-            <div className="relative grid content-start md:col-span-1">
+            <div className="relative grid content-start lg:col-span-1">
               <div className="sticky top-20 grid gap-y-4">
-                <div className="border-1 right mt-5 h-fit bg-gray-100 p-5 md:ml-2 md:mr-10 md:rounded-xl">
+                <div className="border-1 right mt-5 h-fit bg-gray-100 p-5 md:mx-10 md:rounded-xl lg:ml-2 lg:mr-10">
                   <p className="text-xl font-bold">Harga</p>
                   <p className="mt text-2xl font-bold text-cyan-500">
                     Rp {moneySplitter(space.price)}/Jam
                   </p>
                 </div>
 
-                <div className="border-1 right bg-gray-100 p-5 md:ml-2 md:mr-10 md:rounded-xl">
+                <div className="border-1 right bg-gray-100 p-5 md:mx-10 md:rounded-xl lg:ml-2 lg:mr-10">
                   <p className="mb-4 text-xl font-semibold">
                     Cek Waktu Kosong Tempat
                   </p>
 
                   <div className="grid justify-center">
-                    <CalendarView />
+                    <CalendarView bookedScheduleProps={availabilityArray} />
                   </div>
 
-                  <hr />
+                  <p className="my-4 font-medium text-green-700">
+                    *Klik 2 kali pada tanggal untuk cek ketersediaan
+                  </p>
+
+                  <hr className="mt-0" />
 
                   <button
-                    className="m-auto mt-10 block rounded-full bg-darkblue px-20
+                    className="m-auto mt-5 block rounded-full bg-darkblue px-20
                     py-3 text-center font-semibold text-white hover:bg-teal-700"
                     onClick={booking}
                   >
