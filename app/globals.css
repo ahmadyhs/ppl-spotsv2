@@ -30,7 +30,7 @@ h1 {
 }
 
 .table-container {
-  @apply mx-auto overflow-x-scroll rounded-xl shadow-lg;
+  @apply mx-auto overflow-x-auto rounded-xl shadow-lg;
 }
 
 .table-head {
@@ -38,7 +38,7 @@ h1 {
 }
 
 .table-body {
-  @apply flex h-full w-full flex-col items-center overflow-y-scroll rounded-bl-xl rounded-br-xl text-black;
+  @apply flex h-full w-full flex-col items-center overflow-y-auto rounded-bl-xl rounded-br-xl text-black;
 }
 
 /* scrollbar */
