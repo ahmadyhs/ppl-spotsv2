@@ -3,13 +3,12 @@
 import useApiSecured from "@/app/lib/hooks/useApiSecured";
 import { AxiosError } from "axios";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useCallback, useState } from "react";
-//import { usePathname, useRouter } from "next/navigation"
-import { BiAlignRight } from "react-icons/bi";
+import { useCallback, useEffect, useState } from "react";
 import { CiViewList } from "react-icons/ci";
 import { useMediaQuery } from "react-responsive";
+import { useUserInfoContext } from "@/app/lib/hooks/useUserInfoContext";
 
 export default function AsideLayout({
   children,
@@ -17,14 +16,19 @@ export default function AsideLayout({
   children: React.ReactNode;
 }) {
   const { push } = useRouter();
-  const isTabletOrMobile = useMediaQuery({ maxWidth: 768 });
+  const path = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const { setUserType } = useUserInfoContext();
+  const axiosSecured = useApiSecured();
+  const isTabletOrMobile = useMediaQuery({ maxWidth: 768 });
 
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
   }, []);
 
-  const axiosSecured = useApiSecured();
+  useEffect(() => {
+    setIsOpen(false);
+  }, [path]);
 
   async function logout() {
     try {
@@ -32,6 +36,7 @@ export default function AsideLayout({
 
       if (response.status === 200) {
         toast.success(response.data.message);
+        setUserType("UNASSIGNED");
         push("/login");
       }
     } catch (error) {
@@ -41,18 +46,18 @@ export default function AsideLayout({
   }
 
   return (
-    <aside className="col-span-8 block w-full place-content-between overflow-y-auto bg-darkblue md:col-span-2 md:grid md:h-screen">
+    <aside className="sticky top-0 col-span-8 block w-full place-content-between overflow-y-auto bg-darkblue md:col-span-2 md:grid md:h-screen">
       {isTabletOrMobile && (
         <div className="flex h-16 w-full justify-between bg-darkblue">
           <Image
-            className="mx-4 my-auto"
+            className="mx-4 my-auto cursor-pointer rounded-md hover:bg-white hover:bg-opacity-50"
             alt="logo"
             src="/SPOTS-white-icon.svg"
             width={40}
             height={40}
           />
           <CiViewList
-            className="mx-4 my-auto"
+            className="mx-4 my-auto cursor-pointer rounded-lg hover:bg-white hover:bg-opacity-50"
             size="2em"
             color="white"
             onClick={toggleOpen}
@@ -63,18 +68,20 @@ export default function AsideLayout({
       {(isOpen || !isTabletOrMobile) && (
         <>
           <div className="md:col-span-2">
-            <div className="right flex flex-col items-center">
-              <div className="right mt-5 flex flex-col items-center">
-                <Image
-                  alt="logo"
-                  src="/spots-white-icon.svg"
-                  width={200}
-                  height={200}
-                  priority
-                  className="scale-50"
-                />
+            {!isTabletOrMobile && (
+              <div className="right flex flex-col items-center">
+                <div className="right mt-5 flex flex-col items-center">
+                  <Image
+                    alt="logo"
+                    src="/spots-white-icon.svg"
+                    width={200}
+                    height={200}
+                    priority
+                    className="scale-50"
+                  />
+                </div>
               </div>
-            </div>
+            )}
 
             {children}
           </div>
