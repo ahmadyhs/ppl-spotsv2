@@ -20,7 +20,7 @@ export default function AsideLayout({
   const [isOpen, setIsOpen] = useState(false);
   const { setUserType } = useUserInfoContext();
   const axiosSecured = useApiSecured();
-  const isTabletOrMobile = useMediaQuery({ maxWidth: 768 });
+  const isTabletOrMobile = useMediaQuery({ maxWidth: 767 });
 
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
@@ -46,11 +46,11 @@ export default function AsideLayout({
   }
 
   return (
-    <aside className="sticky top-0 col-span-8 block w-full place-content-between overflow-y-auto bg-darkblue md:col-span-2 md:grid md:h-screen">
+    <aside className="sticky top-0 z-20 col-span-8 block w-full place-content-between overflow-y-auto bg-darkblue md:col-span-2 md:grid md:h-screen">
       {isTabletOrMobile && (
         <div className="flex h-16 w-full justify-between bg-darkblue">
           <Image
-            className="mx-4 my-auto cursor-pointer rounded-md hover:bg-white hover:bg-opacity-50"
+            className="mx-4 my-auto"
             alt="logo"
             src="/SPOTS-white-icon.svg"
             width={40}

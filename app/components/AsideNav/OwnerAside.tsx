@@ -54,7 +54,7 @@ export default function OwnerAside() {
       <Link
         className={
           (menu4Condition ? activeColor : "hover:bg-slate-500 ") +
-          "block w-full p-2 text-left font-semibold text-white"
+          "block w-full truncate p-2 text-left font-semibold text-white"
         }
         as="/owner/coworking-space"
         href="/owner/coworking-space"
