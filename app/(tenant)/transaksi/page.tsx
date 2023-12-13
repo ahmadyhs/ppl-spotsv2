@@ -10,7 +10,7 @@ import useApiSecured from "@/app/lib/hooks/useApiSecured";
 import moneySplitter from "@/app/lib/moneySplitter";
 import toast from "react-hot-toast";
 
-export default function Booking(id: number) {
+export default function Transaksi() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const axiosSecured = useApiSecured();
