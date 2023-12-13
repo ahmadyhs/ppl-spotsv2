@@ -87,18 +87,20 @@ export default function AdminPenyedia() {
                     <td className="w-32 break-words p-2">{o.card_number}</td>
                     <td className="w-40 break-words p-2">{o.nik}</td>
                     <td className="w-56 p-2">
-                      <Image
-                        alt={`ktp ${o.user.first_name} ${o.user.last_name}`}
-                        src={o.ktp_picture}
-                        width={200}
-                        height={200}
-                        style={{
-                          width: "auto",
-                          height: "100%",
-                        }}
-                        priority
-                        className="rounded-sm"
-                      />
+                      {o.ktp_picture && (
+                        <Image
+                          alt={`ktp ${o.user.first_name} ${o.user.last_name}`}
+                          src={o.ktp_picture}
+                          width={200}
+                          height={200}
+                          style={{
+                            width: "auto",
+                            height: "100%",
+                          }}
+                          priority
+                          className="rounded-sm"
+                        />
+                      )}
                     </td>
                     <td className="w-40 p-2">
                       {StatusBlockColor(
