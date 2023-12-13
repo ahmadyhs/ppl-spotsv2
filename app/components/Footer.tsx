@@ -8,7 +8,7 @@ export default function Footer() {
           <div>
             <Image
               alt="white-logo"
-              src="/spots-white.svg"
+              src="/spots-white.png"
               height={420}
               width={220}
               priority={true}
