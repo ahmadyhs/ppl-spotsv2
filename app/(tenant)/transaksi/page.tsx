@@ -4,9 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useSpaceIdInfoContext } from "@/app/lib/hooks/useSpaceIdInfoContext";
 import getSpaceByID from "@/app/lib/apiCalls/getSpaceByID";
 import useApiSecured from "@/app/lib/hooks/useApiSecured";
-import { useSpaceIdInfoContext } from "@/app/lib/hooks/useSpaceIdInfoContext";
 import moneySplitter from "@/app/lib/moneySplitter";
 import toast from "react-hot-toast";
 
