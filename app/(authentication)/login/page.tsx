@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useCallback } from "react";
 import axios, { AxiosError } from "axios";
 import { useUserInfoContext } from "@/app/lib/hooks/useUserInfoContext";
@@ -12,6 +12,7 @@ export default function Login() {
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
   const { setUserType } = useUserInfoContext();
+  const searchParams = useSearchParams();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,13 +47,16 @@ export default function Login() {
         }
 
         toast.success("Login berhasil");
-        setTimeout(() => {
-          router.push(homeUrl);
-        }, 500);
+        if (searchParams.get("redirect") === "true") {
+          router.back();
+        } else {
+          setTimeout(() => {
+            router.push(homeUrl);
+          }, 500);
+        }
       }
     } catch (error) {
       const err: any = error as AxiosError;
-      console.log(err.response);
       const message =
         err?.response?.data?.message ?? err?.response?.data ?? "Daftar gagal";
       toast.error(message);
