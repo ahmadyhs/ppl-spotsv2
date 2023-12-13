@@ -46,7 +46,7 @@ const UserMenu = () => {
       <div className="flex w-full flex-col items-start justify-center lg:ml-auto  lg:h-auto lg:w-auto lg:flex-row lg:items-center">
         {profile?.avatar_url && userType === "TENANT" && (
           <Image
-            className="cursor-pointer rounded-full bg-white p-1"
+            className="aspect-square cursor-pointer rounded-full bg-white p-1"
             src={profile.avatar_url}
             width={40}
             height={40}
