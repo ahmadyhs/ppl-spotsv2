@@ -71,14 +71,14 @@ export default function Profile() {
 
   return (
     <form
-      className="justtify-center my-10 block items-center bg-darkblue py-20"
+      className="justtify-center mb-10 mt-6 block items-center bg-darkblue pb-6"
       onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         updateProfile();
       }}
     >
       <div className="flex justify-center">
-        <div className="m-6 rounded-2xl bg-slate-100 p-8">
+        <div className="m-4 rounded-2xl bg-slate-100 p-4">
           <Image
             alt="profile-picture"
             className="aspect-square rounded-md object-cover"
@@ -108,7 +108,7 @@ export default function Profile() {
         </div>
       </div>
 
-      <div className="mx-8 rounded-xl bg-darkgray p-6">
+      <div className="mx-8 rounded-xl bg-darkgray p-3">
         <div className="my-3 grid grid-cols-1 items-center md:grid-cols-3">
           <p className="w-full text-xl font-medium text-white">Nama Depan</p>
           <input
@@ -149,7 +149,7 @@ export default function Profile() {
           />
         </div>
 
-        <div className="grid items-center justify-center gap-y-6 pt-4 md:flex md:gap-x-28 md:pt-8">
+        <div className="grid items-center justify-center gap-y-6 pt-4 md:flex md:gap-x-28">
           {!editInput ? (
             <button
               className="green-button-state m-auto w-48 rounded-full py-3"
