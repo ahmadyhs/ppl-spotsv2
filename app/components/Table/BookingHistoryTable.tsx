@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import StatusBlockColor from "@/app/components/StatusBlockColor";
-import useApiSecured from "@/app/lib/hooks/useApiSecured";
-import toast from "react-hot-toast";
-import moneySplitter from "@/app/lib/moneySplitter";
 import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
+import useApiSecured from "@/app/lib/hooks/useApiSecured";
+import StatusBlockColor from "@/app/components/StatusBlockColor";
+import moneySplitter from "@/app/lib/moneySplitter";
+import toast from "react-hot-toast";
 
 export interface BookingHistory {
   booking_id: string;
