@@ -249,7 +249,7 @@ export default function SpaceForm({
 
       <div className="flex justify-evenly">
         <button
-          className="m-4 w-fit bg-green-300 p-3 text-black hover:bg-green-600 active:bg-green-700"
+          className="button-color-state m-4 block w-fit bg-green-700 p-3 px-20 py-3 text-white hover:bg-green-500 active:bg-teal-600"
           type="submit"
         >
           Submit
