@@ -1,34 +1,19 @@
 "use client";
 
-import StatusBlockColor from "@/app/components/StatusBlockColor";
-import useApiSecured from "@/app/lib/hooks/useApiSecured";
-import { AxiosError } from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { AxiosError } from "axios";
+import useApiSecured from "@/app/lib/hooks/useApiSecured";
+import { Owner } from "@/app/owner/page";
+import StatusBlockColor from "@/app/components/StatusBlockColor";
 import toast from "react-hot-toast";
-
-export type Owner = {
-  owner_id: number;
-  user_id: number;
-  nik: string;
-  ktp_picture: string;
-  balance: string;
-  bank_name: string;
-  card_number: string;
-  status: string;
-  user: {
-    email: string;
-    first_name: string;
-    last_name: string;
-    phone_number: string;
-  };
-};
 
 export default function AdminPenyedia() {
   const axiosSecured = useApiSecured();
 
   const [isFetched, setIsFetched] = useState(false);
   const [owners, setOwners] = useState<Owner[] | null>(null);
+  const [updatedOwner, setUpdatedOwner] = useState<Owner | null>(null);
 
   useEffect(() => {
     async function getOwner() {
@@ -42,18 +27,18 @@ export default function AdminPenyedia() {
       }
     }
     getOwner();
-  }, []);
+  }, [updatedOwner]);
 
   async function approvePenyedia(owner_id: number, approval: boolean) {
     const status = approval ? "APPROVED" : "REJECTED";
 
     try {
-      await axiosSecured.put("/lib/apiCalls/admin/getOwner", {
+      const response = await axiosSecured.put("/lib/apiCalls/admin/getOwner", {
         id: owner_id,
         status: status,
       });
+      setUpdatedOwner(response.data.owner);
       toast.success("Verifikasi berhasil");
-      setTimeout(() => location.reload(), 200);
     } catch (error) {
       toast.error("Verifikasi gagal");
     }
