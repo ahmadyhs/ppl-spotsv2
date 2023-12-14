@@ -45,7 +45,7 @@ export default function OwnerCredential() {
   }, []);
 
   return (
-    <section className="col-span-8 max-h-screen md:col-span-6">
+    <section className="col-span-12 max-h-screen sm:col-span-8 md:col-span-6">
       <title>Data Diri Anda</title>
       <div className="h-screen overflow-auto">
         <h1 className="pl-0 text-center">Data Penyedia</h1>
@@ -53,75 +53,75 @@ export default function OwnerCredential() {
         <div className="mx-10 mb-4 grid min-h-[70vh] grid-cols-12 gap-y-4 rounded-xl border border-gray-300 p-4 shadow-lg">
           {owner && (
             <>
-              <p className="col-span-3">Nama Depan</p>
-              <div className="col-span-1">:</div>
-              <div className="col-span-8 rounded-xl text-center">
+              <p className="col-span-4 sm:col-span-3">Nama Depan</p>
+              <div className="col-span-2 sm:col-span-1">:</div>
+              <div className="col-span-12 rounded-xl bg-slate-50 text-center sm:col-span-8">
                 {owner.user.first_name}
               </div>
 
-              <p className="col-span-3">Nama Belakang</p>
-              <div className="col-span-1">:</div>
-              <div className="col-span-8 rounded-xl text-center">
+              <p className="col-span-4 sm:col-span-3">Nama Belakang</p>
+              <div className="col-span-2 sm:col-span-1">:</div>
+              <div className="col-span-12 rounded-xl bg-slate-50 text-center sm:col-span-8">
                 {owner.user.last_name}
               </div>
 
-              <p className="col-span-3">Email</p>
-              <div className="col-span-1">:</div>
-              <div className="col-span-8 rounded-xl text-center">
+              <p className="col-span-4 sm:col-span-3">Email</p>
+              <div className="col-span-2 sm:col-span-1">:</div>
+              <div className="col-span-12 rounded-xl bg-slate-50 text-center sm:col-span-8">
                 {owner.user.email}
               </div>
 
-              <p className="col-span-3">Nomor Telepon</p>
-              <div className="col-span-1">:</div>
-              <div className="col-span-8 rounded-xl text-center">
+              <p className="col-span-4 sm:col-span-3">Nomor Telepon</p>
+              <div className="col-span-2 sm:col-span-1">:</div>
+              <div className="col-span-12 rounded-xl bg-slate-50 text-center sm:col-span-8">
                 {owner.user.phone_number}
               </div>
 
-              <p className="col-span-3">NIK</p>
-              <div className="col-span-1">:</div>
-              <div className="col-span-8 rounded-xl text-center">
+              <p className="col-span-4 sm:col-span-3">NIK</p>
+              <div className="col-span-2 sm:col-span-1">:</div>
+              <div className="col-span-12 rounded-xl bg-slate-50 text-center sm:col-span-8">
                 {owner.nik ? (
                   owner.nik
                 ) : (
-                  <span className="rounded-md bg-red-500 px-4 text-white">
+                  <span className="my-auto rounded-md bg-red-500 px-4 text-white">
                     Belum diisi!
                   </span>
                 )}
               </div>
 
-              <p className="col-span-3">Bank</p>
-              <div className="col-span-1">:</div>
-              <div className="col-span-8 rounded-xl text-center">
+              <p className="col-span-4 sm:col-span-3">Bank</p>
+              <div className="col-span-2 sm:col-span-1">:</div>
+              <div className="col-span-12 rounded-xl bg-slate-50 text-center sm:col-span-8">
                 {owner.bank_name ? (
                   owner.bank_name
                 ) : (
-                  <span className="rounded-md bg-red-500 px-4 text-white">
+                  <span className="my-auto rounded-md bg-red-500 px-4 text-white">
                     Belum diisi!
                   </span>
                 )}
               </div>
 
-              <p className="col-span-3">Nomor Kartu</p>
-              <div className="col-span-1">:</div>
-              <div className="col-span-8 rounded-xl text-center">
+              <p className="col-span-4 sm:col-span-3">Nomor Kartu</p>
+              <div className="col-span-2 sm:col-span-1">:</div>
+              <div className="col-span-12 rounded-xl bg-slate-50 text-center sm:col-span-8">
                 {owner.card_number ? (
                   owner.card_number
                 ) : (
-                  <span className="rounded-md bg-red-500 px-4 text-white">
+                  <span className="my-auto rounded-md bg-red-500 px-4 text-white">
                     Belum diisi!
                   </span>
                 )}
               </div>
 
-              <p className="col-span-3">Balance</p>
-              <div className="col-span-1">:</div>
-              <div className="col-span-8 rounded-xl text-center">
+              <p className="col-span-4 sm:col-span-3">Balance</p>
+              <div className="col-span-2 sm:col-span-1">:</div>
+              <div className="col-span-12 rounded-xl bg-slate-50 text-center sm:col-span-8">
                 Rp. {moneySplitter(owner.balance)}
               </div>
 
-              <p className="col-span-3">KTP</p>
-              <div className="col-span-1">:</div>
-              <div className="col-span-8 grid justify-center rounded-xl text-center">
+              <p className="col-span-4 sm:col-span-3">KTP</p>
+              <div className="col-span-2 sm:col-span-1">:</div>
+              <div className="col-span-12 grid justify-center rounded-xl text-center sm:col-span-8">
                 {owner.ktp_picture ? (
                   <Image
                     alt={`ktp ${owner.user.first_name} ${owner.user.last_name}`}
@@ -136,15 +136,15 @@ export default function OwnerCredential() {
                     className="rounded-sm"
                   />
                 ) : (
-                  <span className="rounded-md bg-red-500 px-4 text-white">
+                  <span className="my-auto rounded-md bg-red-500 px-4 text-white">
                     Belum diisi!
                   </span>
                 )}
               </div>
 
-              <p className="col-span-3">Status</p>
-              <div className="col-span-1">:</div>
-              <div className="col-span-8 rounded-xl text-center">
+              <p className="col-span-4 sm:col-span-3">Status</p>
+              <div className="col-span-2 sm:col-span-1">:</div>
+              <div className="col-span-12 rounded-xl text-center sm:col-span-8">
                 {owner.status === "APPROVED" ? (
                   <span className="rounded-lg bg-green-400 p-2">
                     {owner.status}
@@ -165,7 +165,7 @@ export default function OwnerCredential() {
                 !owner.card_number &&
                 !owner.ktp_picture && (
                   <Link
-                    className="col-span-4 col-start-5 my-auto w-full cursor-pointer rounded-lg bg-green-300 py-2 text-center font-semibold"
+                    className="button-color-state col-span-12 my-auto block rounded-lg bg-green-700 px-10 py-3 text-center font-semibold text-white hover:bg-green-500 active:bg-teal-600 sm:col-span-4 sm:col-start-5"
                     href={"/owner/edit/datadiri"}
                   >
                     Lengkapi Data
