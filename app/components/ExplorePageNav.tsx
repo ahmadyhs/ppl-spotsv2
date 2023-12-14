@@ -1,7 +1,8 @@
 "use client";
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
+import * as NProgress from "nprogress";
 
 export default function ExplorePageNav({
   prevIndex,
@@ -28,6 +29,7 @@ export default function ExplorePageNav({
             className="flex items-center rounded-md bg-darkblue p-2"
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.preventDefault();
+              NProgress.start();
               push(`/eksplorasi?page=${pageIndex}`);
             }}
           >
