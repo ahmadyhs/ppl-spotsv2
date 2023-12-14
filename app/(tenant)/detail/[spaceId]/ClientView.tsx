@@ -150,10 +150,16 @@ export default function ClientDetailView(space: SpaceResultDetail) {
             <div className="border-1 bg-gray-100 p-5 md:mx-10 md:rounded-xl lg:ml-10 lg:mr-2">
               <p className="mb-2 text-xl font-semibold">Fasilitas</p>
               <ul className="ml-10 list-disc font-medium text-gray-600">
-                <li>{space.capacity} Kursi</li>
+                <li className="font-semibold">{space.capacity} Orang</li>
                 {space.coworking_space_facilities.map((fac) => {
                   return (
-                    <li key={fac.facility.facility_id}>{fac.facility.name}</li>
+                    <li
+                      className="font-semibold"
+                      key={fac.facility.facility_id}
+                    >
+                      {fac.facility.name}
+                      <p className="font-normal">{fac.facility.description}</p>
+                    </li>
                   );
                 })}
               </ul>
