@@ -36,13 +36,13 @@ export default function AsideLayout({
 
       if (response.status === 200) {
         toast.success(response.data.message);
-        setUserType("UNASSIGNED");
-        push("/login");
       }
     } catch (error) {
       const err = error as AxiosError;
       console.error(err?.response);
     }
+    setUserType("UNASSIGNED");
+    push("/login");
   }
 
   return (
