@@ -126,7 +126,7 @@ export default function Signup() {
 
         <input
           type="number"
-          placeholder="Nomor Telepon"
+          placeholder="Nomor Telepon. cth: 628***"
           className={
             style +
             " [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
