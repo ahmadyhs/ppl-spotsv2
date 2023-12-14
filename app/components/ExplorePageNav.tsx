@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/router";
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
 
 export default function ExplorePageNav({
@@ -12,6 +12,8 @@ export default function ExplorePageNav({
   currentIndex: number;
   nextIndex: number | null;
 }) {
+  const { push } = useRouter();
+
   function pageNav(pageIndex: number | null, direction: "PREV" | "NEXT") {
     const navArrow =
       direction === "PREV" ? (
@@ -22,12 +24,15 @@ export default function ExplorePageNav({
     return (
       <>
         {pageIndex ? (
-          <Link
-            href={`/eksplorasi?page=${pageIndex}`}
+          <button
             className="flex items-center rounded-md bg-darkblue p-2"
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              e.preventDefault();
+              push(`/eksplorasi?page=${pageIndex}`);
+            }}
           >
             {navArrow}
-          </Link>
+          </button>
         ) : (
           <div className="flex items-center rounded-md bg-darkblue bg-opacity-50 p-2">
             {navArrow}
