@@ -20,8 +20,8 @@ export default function Booking({ params }: { params: { spaceId: number } }) {
   const searchParams = useSearchParams();
   const name = searchParams.get("name");
   const price = searchParams.get("price");
-  if (!name || !price) router.back();
   NProgress.done();
+  if (!name || !price) router.back();
 
   const { schedule } = useSpaceIdInfoContext();
   const [backupSchedule, setBackupSchedule] = useState<Availabilities | null>(
@@ -33,6 +33,17 @@ export default function Booking({ params }: { params: { spaceId: number } }) {
   const [date, setDate] = useState("");
   const [startHour, setStartHour] = useState("");
   const [endHour, setEndHour] = useState("");
+
+  useEffect(() => {
+    async function getBackupPicture() {
+      const response = await getSpaceByID(params.spaceId);
+      const availabilitesArray = response.availabilities?.map((value) => {
+        return remapAvailabilities(value);
+      });
+      setBackupSchedule(availabilitesArray ?? []);
+    }
+    if (!schedule) getBackupPicture();
+  }, []);
 
   async function submitBooking() {
     try {
@@ -66,17 +77,6 @@ export default function Booking({ params }: { params: { spaceId: number } }) {
       toast.error(message);
     }
   }
-
-  useEffect(() => {
-    async function getBackupPicture() {
-      const response = await getSpaceByID(params.spaceId);
-      const availabilitesArray = response.availabilities?.map((value) => {
-        return remapAvailabilities(value);
-      });
-      setBackupSchedule(availabilitesArray ?? []);
-    }
-    if (!schedule) getBackupPicture();
-  }, []);
 
   return (
     <>

@@ -1,14 +1,32 @@
+"use client";
+
 import Image from "next/image";
 import Footer from "../components/Footer";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import MainLoading from "../components/MainLoading";
 
 export default function Home() {
+  const { push } = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (
+      searchParams.get("order_id") &&
+      searchParams.get("status_code") &&
+      searchParams.get("transaction_status")
+    ) {
+      push(`/booking-detail?order_id=${searchParams.get("order_id")}`);
+    }
+  }, []);
+
   return (
     <>
       <title>Spots</title>
 
       <div className="relative grid h-min max-h-[70vh] place-content-end overflow-hidden bg-darkgray">
         <Image
-          className="aspect-video h-fit w-full"
+          className="aspect-video w-full"
           src="/mainoffice.png"
           width={1440}
           height={810}
@@ -111,7 +129,7 @@ export default function Home() {
       <section className="dark:bg-white-800 bg-gray-200">
         <div className="mx-auto max-w-screen-xl px-4 py-8">
           <div className="flex flex-col items-center lg:grid lg:grid-cols-2">
-            <div className="ml-10 text-gray-500 dark:text-gray-400 sm:text-lg">
+            <div className="px-6 text-gray-500 dark:text-gray-400 sm:text-lg md:px-12">
               <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-blue-400 ">
                 Cari Coworking Space Sesuai Kebutuhanmu!
               </h2>
