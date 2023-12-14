@@ -24,9 +24,9 @@ export default function Home() {
     <>
       <title>Spots</title>
 
-      <div className="relative grid h-min max-h-[70vh] place-content-end overflow-hidden bg-darkgray">
+      <div className="relative grid h-min max-h-[70vh] w-screen place-content-end overflow-hidden bg-darkgray">
         <Image
-          className="aspect-video w-full"
+          className="aspect-video h-full w-screen"
           src="/mainoffice.png"
           width={1440}
           height={810}
