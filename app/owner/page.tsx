@@ -6,6 +6,7 @@ import Image from "next/image";
 import moneySplitter from "../lib/moneySplitter";
 import useApiSecured from "../lib/hooks/useApiSecured";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 export type Owner = {
   owner_id: number;
@@ -37,7 +38,8 @@ export default function OwnerCredential() {
         setOwner(response.data.owner);
       } catch (error) {
         const err = error as AxiosError;
-        console.log(err);
+        //@ts-ignore
+        toast.error(err.response?.data?.message ?? "Gagal ambil data");
       }
     }
 
