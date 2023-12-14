@@ -3,12 +3,12 @@ import Footer from "../components/Footer";
 
 export default function Home() {
   return (
-    <div className="absolute top-0">
+    <>
       <title>Spots</title>
 
-      <div className="relative h-min bg-darkgray">
+      <div className="relative grid h-min max-h-[70vh] place-content-end overflow-hidden bg-darkgray">
         <Image
-          className="scale-x-100 "
+          className="aspect-video h-fit w-full"
           src="/mainoffice.png"
           width={1440}
           height={810}
@@ -207,6 +207,6 @@ export default function Home() {
         </div>
       </section>
       <Footer />
-    </div>
+    </>
   );
 }
