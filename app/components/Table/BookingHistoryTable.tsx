@@ -100,7 +100,7 @@ export default function BookingHistoryTable() {
               );
             })
           ) : (
-            <tr className="flex w-full">
+            <tr className="flex h-full w-full items-center">
               <td className="grid w-full justify-center p-4">Data Kosong</td>
             </tr>
           ))}
