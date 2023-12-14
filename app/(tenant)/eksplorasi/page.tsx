@@ -1,6 +1,7 @@
 import getAllSpace from "@/app/lib/apiCalls/getAllSpace";
 import SpaceCard from "@/app/components/SpaceCard";
 import ExplorePageNav from "@/app/components/ExplorePageNav";
+import * as NProgress from "nprogress";
 
 export default async function Explore({
   searchParams,
@@ -9,6 +10,7 @@ export default async function Explore({
 }) {
   const keyWord = searchParams ?? null;
   const [spaceResult, pagination] = await getAllSpace(keyWord);
+  NProgress.done();
 
   return (
     <>
