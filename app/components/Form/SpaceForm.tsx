@@ -124,7 +124,7 @@ export default function SpaceForm({
 
   return (
     <form
-      className="mb-8 rounded-xl border border-gray-300 shadow-lg"
+      className="mb-8 rounded-xl border border-gray-300 pt-4 shadow-lg sm:pt-0"
       onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (capacity === "" || capacity === "0" || /[^\d]/.test(capacity)) {
@@ -135,11 +135,11 @@ export default function SpaceForm({
       }}
     >
       <div className="flex justify-center px-8">
-        <div className="flex w-full items-center justify-center">
-          <p className="w-3/12 text-xl text-black">Nama Tempat</p>
+        <div className="w-full items-center justify-center sm:flex">
+          <p className="w-full text-xl text-black sm:w-3/12">Nama Tempat</p>
           <input
             type="text"
-            className="my-5 mr-0 w-9/12 rounded-xl border px-2 py-2 text-left text-black"
+            className="my-5 w-full rounded-xl border px-2 py-2 text-left text-black sm:w-9/12"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -148,10 +148,10 @@ export default function SpaceForm({
       </div>
 
       <div className="flex justify-center px-8">
-        <div className="flex w-full items-center justify-center">
-          <p className="w-3/12 text-xl text-black">Deskripsi</p>
+        <div className="w-full items-center justify-center sm:flex">
+          <p className="w-full text-xl text-black sm:w-3/12">Deskripsi</p>
           <textarea
-            className="my-5 mr-0 h-32 w-9/12 rounded-xl border px-2 py-2 text-left text-black"
+            className="my-5 h-32 w-full rounded-xl border px-2 py-2 text-left text-black sm:w-9/12"
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
             required
@@ -160,11 +160,11 @@ export default function SpaceForm({
       </div>
 
       <div className="flex justify-center px-8">
-        <div className="flex w-full items-center justify-center">
-          <p className="w-3/12 text-xl text-black">Harga per jam</p>
+        <div className="w-full items-center justify-center sm:flex">
+          <p className="w-full text-xl text-black sm:w-3/12">Harga per jam</p>
           <input
             type="number"
-            className="my-5 mr-0 w-9/12 rounded-xl border px-2 py-2 text-left text-black"
+            className="my-5 w-full rounded-xl border px-2 py-2 text-left text-black sm:w-9/12"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required
@@ -173,11 +173,11 @@ export default function SpaceForm({
       </div>
 
       <div className="flex justify-center px-8">
-        <div className="flex w-full items-center justify-center">
-          <p className="w-3/12 text-xl text-black">Kapasitas orang</p>
+        <div className="w-full items-center justify-center sm:flex">
+          <p className="w-full text-xl text-black sm:w-3/12">Kapasitas orang</p>
           <input
             type="number"
-            className="my-5 mr-0 w-9/12 rounded-xl border px-2 py-2 text-left text-black"
+            className="my-5 w-full rounded-xl border px-2 py-2 text-left text-black sm:w-9/12"
             value={capacity}
             onChange={(e) => setCapacity(e.target.value)}
             required
@@ -186,11 +186,11 @@ export default function SpaceForm({
       </div>
 
       <div className="flex justify-center px-8">
-        <div className="flex w-full items-center justify-center">
-          <p className="w-3/12 text-xl text-black">Alamat Kota</p>
+        <div className="w-full items-center justify-center sm:flex">
+          <p className="w-full text-xl text-black sm:w-3/12">Alamat Kota</p>
           <input
             type="text"
-            className="my-5 mr-0 w-9/12 rounded-xl border px-2 py-2 text-left text-black"
+            className="my-5 w-full rounded-xl border px-2 py-2 text-left text-black sm:w-9/12"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             required
@@ -199,9 +199,9 @@ export default function SpaceForm({
       </div>
 
       <div className="flex justify-center px-8">
-        <div className="flex w-full items-center justify-center">
-          <p className="w-3/12 text-xl text-black">Foto</p>
-          <div className="my-5 mr-0 h-20 w-9/12 rounded-xl border-2 border-dashed border-darkblue bg-slate-300">
+        <div className="w-full items-center justify-center sm:flex">
+          <p className="w-full text-xl text-black sm:w-3/12">Foto</p>
+          <div className="my-5 h-20 w-full rounded-xl border-2 border-dashed border-darkblue bg-slate-300 sm:w-9/12">
             <input
               type="file"
               className="h-full w-full p-6 text-black"
@@ -215,7 +215,7 @@ export default function SpaceForm({
       </div>
 
       <div className="my-5 px-8">
-        <p className="mb-6 w-4/12 text-xl">Fasilitas tempat</p>
+        <p className="mb-6 w-full text-xl sm:w-4/12">Fasilitas tempat</p>
 
         <div className="grid w-full grid-cols-1 items-center justify-center gap-2 text-black sm:grid-cols-2 lg:grid-cols-3">
           {allFacilities ? (
@@ -242,7 +242,7 @@ export default function SpaceForm({
           lng={longitude}
           draggable={true}
           label=""
-          style="h-full w-full rounded-xl bg-white p-4"
+          style="h-full w-full rounded-xl bg-white sm:p-4 py-4"
           coordinatesFetcher={handleCoordinates}
         />
       </div>
