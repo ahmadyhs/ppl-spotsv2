@@ -3,15 +3,17 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
-import useApiSecured from "@/app/lib/hooks/useApiSecured";
-import toast from "react-hot-toast";
 import { Owner } from "../../page";
+import useApiSecured from "@/app/lib/hooks/useApiSecured";
+import SubmitButton from "@/app/components/SubmitButton";
+import toast from "react-hot-toast";
 
 export default function EditOwnerCredential() {
   const { push } = useRouter();
   const axiosSecured = useApiSecured();
 
   const [isFirstTimeEdit, setIsFirstTimeEdit] = useState(true);
+  const [click, setClick] = useState(false);
 
   const [image, setImage] = useState<File | null>(null);
   const [nik, setNik] = useState("");
@@ -38,6 +40,7 @@ export default function EditOwnerCredential() {
   }, []);
 
   async function getOwnerProfile() {
+    setClick(true);
     try {
       const form = new FormData();
 
@@ -58,6 +61,7 @@ export default function EditOwnerCredential() {
       // @ts-ignore
       if (err.response?.data?.message) toast.error(err.response.data.message);
     }
+    setClick(false);
   }
 
   return (
@@ -130,12 +134,11 @@ export default function EditOwnerCredential() {
           </div>
 
           <div className="flex justify-evenly">
-            <button
-              className="button-color-state mt-4 block bg-green-700 px-20 py-3 text-white hover:bg-green-500 active:bg-teal-600"
-              type="submit"
-            >
-              Submit
-            </button>
+            <SubmitButton
+              state={click}
+              style="button-color-state focus:ring-0 mt-4 block bg-green-700 px-20 py-3 text-white hover:bg-green-500 active:bg-teal-600"
+              label="Submit"
+            />
           </div>
         </section>
       </form>

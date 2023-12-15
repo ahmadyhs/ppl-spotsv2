@@ -53,7 +53,7 @@ export default function OwnerCredential() {
         <h1 className="pl-0 text-center">Data Penyedia</h1>
 
         <div className="mx-10 mb-4 grid min-h-[70vh] grid-cols-12 gap-y-4 rounded-xl border border-gray-300 p-4 shadow-lg">
-          {owner && (
+          {owner ? (
             <>
               <p className="col-span-4 sm:col-span-3">Nama Depan</p>
               <div className="col-span-2 sm:col-span-1">:</div>
@@ -174,6 +174,8 @@ export default function OwnerCredential() {
                   </Link>
                 )}
             </>
+          ) : (
+            <div className="animate pulse col-span-full m-8 rounded-xl bg-slate-100" />
           )}
         </div>
       </div>
