@@ -95,14 +95,17 @@ export default function SpaceForm({
       }
     } catch (error) {
       const err = error as AxiosError;
-      if (err.response?.statusText === "Payload Too Large") {
+      if (
+        err.response?.statusText === "Payload Too Large" ||
+        err.response?.status === 413
+      ) {
         toast.error("Ukuran foto terlalu besar, coba dibawah 5 MB");
       } else if (
         // @ts-ignore
         err.response.data.message === "Can't find variable: oldImage"
       ) {
         toast.error("Tidak bisa upload format foto");
-      } else toast.error("Updata gagal, cek kembali data");
+      } else toast.error("Kirim gagal, cek kembali data");
     }
     setClick(false);
   }
