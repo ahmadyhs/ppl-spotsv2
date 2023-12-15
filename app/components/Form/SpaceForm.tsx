@@ -7,6 +7,7 @@ import useApiSecured from "@/app/lib/hooks/useApiSecured";
 import { AxiosError } from "axios";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import SubmitButton from "../SubmitButton";
 import toast from "react-hot-toast";
 
 type Facilities = {
@@ -26,6 +27,7 @@ export default function SpaceForm({
   const axiosSecured = useApiSecured();
 
   const [allFacilities, setAllFacilities] = useState<Facilities[] | null>(null);
+  const [click, setClick] = useState(false);
 
   const [name, setName] = useState(spaceData ? spaceData.name : "");
   const [desc, setDesc] = useState(spaceData ? spaceData.description : "");
@@ -54,6 +56,7 @@ export default function SpaceForm({
   }, []);
 
   async function postSpace() {
+    setClick(true);
     try {
       const form = new FormData();
 
@@ -93,7 +96,7 @@ export default function SpaceForm({
     } catch (error) {
       const err = error as AxiosError;
       if (err.response?.statusText === "Payload Too Large") {
-        toast.error("Ukuran foto harus dibawah 5 MB");
+        toast.error("Ukuran foto terlalu besar, coba dibawah 5 MB");
       } else if (
         // @ts-ignore
         err.response.data.message === "Can't find variable: oldImage"
@@ -101,6 +104,7 @@ export default function SpaceForm({
         toast.error("Tidak bisa upload format foto");
       } else toast.error("Updata gagal, cek kembali data");
     }
+    setClick(false);
   }
 
   const handleCheckboxes = (e: any) => {
@@ -248,12 +252,11 @@ export default function SpaceForm({
       </div>
 
       <div className="flex justify-evenly">
-        <button
-          className="button-color-state m-4 block w-fit bg-green-700 p-3 px-20 py-3 text-white hover:bg-green-500 active:bg-teal-600"
-          type="submit"
-        >
-          Submit
-        </button>
+        <SubmitButton
+          state={click}
+          style="button-color-state m-4 focus:ring-0 block w-fit bg-green-700 p-3 px-20 py-3 text-white hover:bg-green-500 active:bg-teal-600"
+          label="Submit"
+        />
       </div>
     </form>
   );
