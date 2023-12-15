@@ -104,7 +104,11 @@ export default function BookingHistoryTable() {
             </tr>
           ))
         ) : (
-          <div className="m-4 h-full w-11/12 animate-pulse rounded-lg bg-slate-200"></div>
+          <>
+            <div className="m-4 h-8 w-11/12 animate-pulse rounded-lg bg-slate-200"></div>
+            <div className="m-4 h-8 w-11/12 animate-pulse rounded-lg bg-slate-200"></div>
+            <div className="m-4 h-8 w-11/12 animate-pulse rounded-lg bg-slate-200"></div>
+          </>
         )}
       </tbody>
     </table>
