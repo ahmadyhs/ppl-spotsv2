@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import * as NProgress from "nprogress";
 
 export default function SearchBar() {
   const { push } = useRouter();
@@ -14,7 +13,6 @@ export default function SearchBar() {
         className="relative flex w-full flex-wrap px-6 sm:px-12"
         onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
-          NProgress.start();
           push(`/eksplorasi?search=${keyWord}`);
         }}
       >
