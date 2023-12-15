@@ -4,7 +4,6 @@ import Image from "next/image";
 import Footer from "../components/Footer";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import MainLoading from "../components/MainLoading";
 
 export default function Home() {
   const { push } = useRouter();

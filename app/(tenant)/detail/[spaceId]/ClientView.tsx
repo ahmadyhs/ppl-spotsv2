@@ -174,7 +174,7 @@ export default function ClientDetailView(space: SpaceResultDetail) {
 
               <p className="mt-2 text-xl font-semibold">Lokasi</p>
               <div className="mt-2 flex items-center">
-                <HiMiniMapPin size="2em" />
+                <HiMiniMapPin size="2em" className="shrink-0" />
                 <p className="ml-2 mt-2 font-semibold text-gray-600">
                   {space.location.address}
                 </p>
@@ -207,7 +207,7 @@ export default function ClientDetailView(space: SpaceResultDetail) {
                 <hr className="mt-0" />
 
                 <button
-                  className="button-color-state m-auto mt-5 block rounded-full bg-darkblue px-20 py-3 text-white focus:outline-2 focus:outline-green-600"
+                  className="button-color-state m-auto mt-5 block rounded-full bg-darkblue px-20 py-3 text-white focus:outline-2 focus:outline-green-600 focus:ring-0"
                   onClick={booking}
                 >
                   Booking
