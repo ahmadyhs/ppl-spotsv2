@@ -2,20 +2,19 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useCallback, useEffect } from "react";
-import { AxiosError } from "axios";
-import toast from "react-hot-toast";
 import { usePathname, useRouter } from "next/navigation";
+import { useState, useCallback, useEffect } from "react";
 import useApiSecured from "../lib/hooks/useApiSecured";
 import { useUserInfoContext } from "../lib/hooks/useUserInfoContext";
+import * as NProgress from "nprogress";
+import toast from "react-hot-toast";
 
 const UserMenu = () => {
   const { push } = useRouter();
   const path = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
-
   const axiosSecured = useApiSecured();
   const { profile, userType, setProfile, setUserType } = useUserInfoContext();
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
@@ -26,6 +25,7 @@ const UserMenu = () => {
   }, [path, userType]);
 
   async function logout() {
+    NProgress.start();
     try {
       const response = await axiosSecured.delete("/lib/apiCalls/auth/logout");
 
@@ -37,6 +37,7 @@ const UserMenu = () => {
     } catch (error) {
       console.error("Error while logging out");
     }
+    NProgress.done();
     setProfile(null);
     setUserType("UNASSIGNED");
   }
